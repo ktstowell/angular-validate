@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngValidateApp', [])
+angular.module('ngValidateApp', ['ng-validation'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
