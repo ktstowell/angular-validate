@@ -159,6 +159,9 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     this.required.forEach(function(el, idx) {
       self.validate.call(self, el, idx);
     });
+
+    // Observe DOM if enabled.
+    this.watch_validation.init(this.vChunk);
   };
 
   /**
@@ -544,6 +547,32 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       this.opts.success.call(this);
       // Allow the event trigger
       return true;
+    }
+  };
+
+  /**
+   * [watch_validation description]
+   * @type {Object}
+   */
+  Validation.prototype.watch_validation = {
+    config: {childList: true},
+    init: function(DOM) {
+      this.observable = DOM || [];
+      // cache dom chunk for comparison
+      // update cache when DOM updates
+      // set up MutationObserver to call watch.
+      // Also check for support. If mutation observer isn't found, return false or something.
+    },
+    watch: function() {
+      // check dom to see if any new
+      // fields exist in the exempt array
+      // if not, add them to required
+
+      // check dom to see if removed child elements
+      // were in the required array, if so remove them
+    },
+    stop: function() {
+
     }
   };
 
