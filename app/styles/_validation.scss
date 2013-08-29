@@ -1,0 +1,35 @@
+input.failed-validation,
+input.failed-validation:active,
+input.failed-validation:focus,
+textarea.failed-validation,
+textarea.failed-validation:active,
+textarea.failed-validation:focus {
+  background-color: rgba(255, 0, 0, .6);
+  border: 1px groove red;
+}
+
+input.passed-validation,
+input.passed-validation:active,
+input.passed-validation:focus,
+textarea.passed-validation,
+textarea.passed-validation:active,
+textarea.passed-validation:focus {
+  background-color: rgba(0, 255, 0, .6);
+  border: 1px groove green;
+}
+
+input, textarea {
+  outline: none;
+  margin-top:0;
+  margin-bottom:0;
+  vertical-align: top;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+}
+
+input[disabled] {
+  cursor: default;
+  color: #ccc;
+}
