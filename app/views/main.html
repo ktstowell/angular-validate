@@ -1,9 +1,53 @@
-<div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
-</div>
+<section id="main">
+  <section>
+    <header>
+      <h4>Form Example 1 - Default</h4>
+    </header>
+    <form ng-validation="form_1">
+      <input type="text">
+      <input type="password">
+      <input type="submit">
+    </form>
+  </section>
+  <section>
+    <header>
+      <h4>Form Example 2 - Default: email</h4>
+    </header>
+    <form ng-validation="form_2">
+      <input type="email">
+      <input type="tel">
+      <textarea rows="4" cols="14"></textarea>
+      <input type="submit">
+    </form>
+  </section>
+  <section>
+    <header>
+      <h4>Form Example 3 - Custom Exempts</h4>
+    </header>
+    <form ng-validation="form_3">
+      <input type="text" placeholder="required">
+      <input type="text" id="exempt" placeholder="exempt">
+      <input type="text" class="exempt" placeholder="exempt">
+      <input type="text" class="exempt" placeholder="exempt">
+      <textarea rows="4" cols="14" placeholder="required"></textarea>
+      <input type="submit">
+    </form>
+  </section>
+  <section>
+    <header>
+      <h4>Form Example 4 - Varied Element Types</h4>
+    </header>
+    <form ng-validation="form_4">
+      <section id="checkboxes">
+        <input type="checkbox">
+        <input type="checkbox">
+        <input type="checkbox">
+        <input type="text">
+      </section>
+      <input type="radio" name="group1" value="radio1">
+      <input type="radio" name="group1" value="radio2">
+      <input type="text">
+      <input type="submit">
+    </form>
+  </section>
+</section>
