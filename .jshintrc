@@ -4,15 +4,16 @@
   "es5": true,
   "esnext": true,
   "bitwise": true,
-  "camelcase": true,
-  "curly": true,
+  "camelcase": false,
+  "curly": false,
   "eqeqeq": true,
   "immed": true,
+  "forin": false,
   "indent": 2,
   "latedef": true,
   "newcap": true,
   "noarg": true,
-  "quotmark": "single",
+  "quotmark": "true",
   "regexp": true,
   "undef": true,
   "unused": true,
@@ -20,6 +21,6 @@
   "trailing": true,
   "smarttabs": true,
   "globals": {
-    "angular": false
+    "angular": true
   }
 }
