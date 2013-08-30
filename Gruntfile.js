@@ -234,6 +234,18 @@ module.exports = function (grunt) {
             'styles/fonts/*'
           ]
         }]
+      },
+      main: {
+        files: [{
+          expand: true,
+          flatten: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.app %>/../build',
+          src: [
+            'scripts/modules/angular-validate/*'
+          ]
+        }]
       }
     }
   });
@@ -242,7 +254,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('server', [
     'clean:server',
-    'compass:server',
     'livereload-start',
     'connect:livereload',
     'open',
@@ -265,11 +276,12 @@ module.exports = function (grunt) {
     'cssmin',
     'htmlmin',
     'concat',
-    'copy',
+    'copy:dist',
     'ngmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'copy:main'
   ]);
 
   grunt.registerTask('default', ['build']);
