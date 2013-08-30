@@ -31,8 +31,8 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    *      ones.
    *  2.  Establishes instance 'state' members that keep track of required and failed elements as well
    *      as load state
-   *  3.  Validates the instances submit button, which often returns empty when queried at run time.
-   *  4.  Kicks off the validation core by call 'pre-validate' which runs all tasks considered
+   *  3.  Validates the instance's submit button, which often returns empty when queried at run time.
+   *  4.  Kicks off the validation core by calliing 'pre-validate' which runs all tasks considered
    *      pre-requisite to the actual validation.
    */
   var Validation = function(el, opts) {
@@ -678,9 +678,10 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
      */
     textarea: function(el, e) {
       var val = el.value;
-
-      // Null or empty check
-      if (val !== '' && val !== undefined && val !== null) {
+      console.log(val);
+      // Null, empty, undefined and no new line at the beginning.
+      if (val !== '' && val !== undefined && val !== null && 
+        val.match(/^\n/) === null) {
         return true;
       } else {
         return false;
