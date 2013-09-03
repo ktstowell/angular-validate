@@ -12,10 +12,15 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/compiled/foundation.css">
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="ngValidateApp">
+  <body ng-app="ngValidateApp" class="columns">
+    <header>
+      <h1>Angular Validation</h1>
+      <hr />
+    </header>
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
@@ -26,9 +31,10 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view></div>
+    <div id="container" ng-view class="large-11 center"></div>
 
     <!-- build:js scripts/scripts.js -->
+    <script src="components/jquery/dist/jquery.js"></script>
     <script src="components/angular/angular.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
@@ -37,6 +43,9 @@
     <script src="scripts/foundation/foundation.js"></script>
     <script src="scripts/modules/angular-validate/angular-validate.js"></script>
     <script src="scripts/modules/angular-validate/angular-validate-rules.js"></script>
-    <!-- endbuild -->    
+    <script src="scripts/directives/clearfix.js"></script>
+    <!-- endbuild --> 
+    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    <clearfix />
   </body>
 </html>
