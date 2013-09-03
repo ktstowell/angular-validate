@@ -1,0 +1,34 @@
+body {
+	background-image: url(/images/weave_bg.png);
+}
+
+.clearfix {
+	width:100%;
+	clear: both;
+	float:none;
+	min-height: 1px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	padding-bottom: 0;
+	margin-bottom:0.1em;
+}
+
+ul {
+	list-style-type: none;
+	li {
+		list-style-type: none;
+		display: block;
+	}
+}
+
+hr {
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 15px 1px #000;
+	margin-top: 0;
+	padding-top:0;
+}
+
+form hr {
+	box-shadow: none;
+}

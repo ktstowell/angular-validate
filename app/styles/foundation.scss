@@ -42,6 +42,8 @@
   "foundation/components/tooltips",
   "foundation/components/dropdown";
 
-@import "validation";
+@import "validation",
+        "layout",
+        "base";
 
 @import "normalize";

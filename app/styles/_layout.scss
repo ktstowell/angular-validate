@@ -1,0 +1,25 @@
+
+
+#container {
+	margin: 0 auto;
+	text-align: center;
+}
+
+#main {
+	text-align: left;
+}
+
+#concepts {
+	section>ul>li:nth-child(odd) {
+		text-decoration: underline;
+	}
+}
+
+pre {
+	code {
+		position: relative;
+		top:-16px;
+		font-size: .6em;
+		text-align: left;
+	}
+}
