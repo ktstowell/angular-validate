@@ -47,8 +47,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       rule: ngRules.default.rule, // Instance rule
       submit_toggle: 'disabled', // Attribute toggle default
       required: 'required', // Required toggle
-      mark_required: true, // Mark required elems 'required'
-      ignore_type: false, // Ignore element type if set
       target: false, // Event target element to selectively show UI pass/fail
       passed_toggle: 'passed-validation', // Passed toggle default
       failed_toggle: 'failed-validation', // Failed toggle default
@@ -74,7 +72,8 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         blur: ['text', 'password', 'email', 'textarea', 'tel'],
         mouseenter: [],
         mouseleave: []
-      }
+      },
+      ignore: ['header', 'div', 'section', 'p', 'ul', 'li', 'article', 'aside', 'video', 'audio' , 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'span']
     };
 
     // Merge validaiton options
@@ -293,14 +292,18 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         this.exempt.indexOf(el.childNodes[i]) === -1 &&
           // and not the submit element
           el.childNodes[i] !== this.sbmt && !el.childNodes[i].hasAttribute(this.opts.group_toggle)) {
-        // add required class
-        el.childNodes[i].classList.add(this.opts.required);
-        // Add to required array
-        this.required.push(el.childNodes[i]);
-        // Bind events
-        this.bind_selectors(el.childNodes[i], 'validate');
-        // Recurse
-        this.process_required(el.childNodes[i]);
+          console.log(el.childNodes[i].localName);
+          // Only add to required array if not in ignore array
+          if(this.opts.ignore.indexOf(el.childNodes[i].localName) === -1) {
+            // add required class
+            el.childNodes[i].classList.add(this.opts.required);
+            // Add to required array
+            this.required.push(el.childNodes[i]);
+            // Bind events
+            this.bind_selectors(el.childNodes[i], 'validate');
+            // Recurse
+            this.process_required(el.childNodes[i]);
+        }
       }
     }
   };
@@ -534,7 +537,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
 
     // If 'disabled', don't allow submission
     if(el.hasAttribute(this.opts.submit_toggle)) {
-      console.log(e);
       // Failure callback
       this.opts.fail.call(this);
       // prevent link
@@ -655,6 +657,25 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       }
     },
     /**
+     * TELEPHONE VALIDATOR
+     * @param  {[type]} el [description]
+     * @param  {[type]} e  [description]
+     * @return {[type]}    [description]
+     */
+    tel: function(el, e) {
+      var val = el.value;
+      // Default null/empty check
+      if(val !== '' && val !== undefined && val !== null) {
+        if(val.match(/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+    /**
      * CHECKBOX VALIDATOR
      * @param  {DOM} checkbox type element
      * @param  {jQuery event obj} event attached to element
@@ -678,7 +699,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
      */
     textarea: function(el, e) {
       var val = el.value;
-      console.log(val);
+
       // Null, empty, undefined and no new line at the beginning.
       if (val !== '' && val !== undefined && val !== null && 
         val.match(/^\n/) === null) {
