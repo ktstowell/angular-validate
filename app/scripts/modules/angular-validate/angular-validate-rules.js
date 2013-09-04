@@ -4,18 +4,15 @@
  * ANGULAR VALIDATION RULES
  *******************************************************************************************************
  *
- * @description
- * @dependencies
- * @injections
+ * @description File that holds all form rules.
  * @author Ken Stowell
  */
  angular.module('ng-validation').factory('ngValidationRules', function() {
+
   /*******************************************************************************************************
-   * VALIDATION RULES
+   * RULES
    *******************************************************************************************************
-   * @description
-   * @dependency
-   * @author         
+   * @description Object literal with rule definitions.
    */
   var Rules = {
     /**
@@ -55,6 +52,20 @@
         {name: 'radios', container: false, required: 'input[name="group1"]', number_required: 1},
         {name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
       ]
+    },
+    /**
+     * FORM 5 RULE
+     * @type {Object}
+     */
+    form_5: {
+      scenarios: [{name: 'password', options: {ui: '#pw1'}}]
+    },
+    /**
+     * FORM 6 RULE
+     * @type {Object}
+     */
+    form_6: {
+      scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
     }
   };
 
