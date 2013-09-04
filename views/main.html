@@ -1,0 +1,234 @@
+<section id="main" class="large-12 columns">
+  <section>
+    <section>
+      <p>
+        Angular Validation provides an effective, performant, highly customizable yet with reliable defaults, validation tool for
+        your Angular web-app.
+      </p>
+      <section id="concepts">
+        <header>
+          <h6>Concepts:</h6>
+        </header>
+        <section>
+          <p>
+            This module approaches validation via three rule types:
+          </p>
+          <ul>
+            <li> Element:</li>
+            <li>  
+              <ul>
+                <li>
+                  Each element is passed to an element specific validator to ensure it will meet its criteria.
+                </li>
+              </ul>
+            </li>
+            <li>Group:</li>
+            <li>
+              <ul>
+                <li>
+                  Elements can belong to groups. Though while in a group elements will stull be subject to their element validators,
+                  only once the group passes its validation criteria will it count towards the final form pass/fail.
+                </li>
+              </ul>
+            </li>
+            <li>Instance:</li>
+            <li>
+              <ul>
+                <li>
+                  The instance rule is the term attached to the concept of "Can the user submit the form or not". The instance rule requires
+                  all validation criteria, both group and element, to be met.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </section>
+  </section>
+  <section>
+    <header>
+      <h3>Installation
+      <hr>
+    </h3></header>
+    <section>
+      <h6>Method One:</h6>
+      <p>Clone this repo and copy/paste the files in /build to the directory of your choice in your app. Then reference them in your index.html</p>
+      <h6>Method Two:</h6>
+      <p><pre><code class="javascript">bower install ngValidate --save</code></pre></p>
+      <p>Of course you still need to reference the files in your index.html</p>
+    </section>
+  </section>
+  <section id="instructions">
+    <header>
+      <h3>How to Use:</h3>
+      <hr>
+    </header>
+    <section>
+      <form ng-validation="form_1" class="large-6 columns">
+        <header>
+          <h4>Form Example 1 - Default</h4>
+        </header>
+        <input type="text" placeholder="Standard Text Input">
+        <input type="password" placeholder="Password Input">
+        <input type="submit">
+      </form>
+      <section id="form-1-sample" class="code-sample large-6 columns">
+        <header>
+          <h4>Options:</h4>
+        </header>
+          <pre>
+            <code class="javascript">
+// Nothing special, only defaults.
+            </code>
+          </pre>
+        </section>
+        <clearfix></clearfix>
+      </section>
+      <section>
+        <form ng-validation="form_2" class="large-6 columns">
+          <header>
+            <h4>Form Example 2 - Defaults: email, phone, textarea</h4>
+          </header>
+          <input type="email" placeholder="email">
+          <input type="tel" placeholder="telephone">
+          <textarea rows="4" cols="14"></textarea>
+          <input type="submit">
+        </form>
+        <section id="form-1-sample" class="code-sample large-6 columns">
+          <header>
+            <h4>Options:</h4>
+          </header>
+            <pre>
+            <code class="javascript">
+// Nothing special, only defaults.
+            </code>
+            </pre>
+        </section>
+        <clearfix></clearfix>
+      </section>
+      <section>
+        <form ng-validation="form_3" class="large-6 columns">
+          <header>
+            <h4>Form Example 3 - Custom Exempts</h4>
+          </header>
+          <input type="text" placeholder="required">
+          <input type="text" id="exempt" placeholder="exempt">
+          <input type="text" class="exempt" placeholder="exempt">
+          <input type="text" class="exempt" placeholder="exempt">
+          <textarea rows="4" cols="14" placeholder="required"></textarea>
+          <input type="submit">
+        </form>
+        <section id="form-1-sample" class="code-sample large-6 columns">
+          <header>
+            <h4>Options:</h4>
+          </header>
+            <pre>
+            <code class="javascript">
+// In angular-validate-rules.js:
+form_3: {
+  // example using class name and id's
+  exempt: ['.exempt', '#exempt']
+}
+            </code>
+            </pre>
+        </section>
+        <clearfix></clearfix>
+      </section>
+      <section>
+        <form ng-validation="form_4" class="large-6 columns">
+          <header>
+            <h4>Form Example 4 - Varied Element Types</h4>
+          </header>
+          <section id="checkboxes">
+            <h6>Group 1</h6>
+            <hr>
+            <input type="checkbox">
+            <input type="checkbox">
+            <input type="checkbox">
+            <span>At least one checkbox must be checked</span>
+            <input type="text" placeholder="In group 1 but not required">
+          </section>
+          <h6>Group 2</h6>
+          <hr>
+          <input type="radio" name="group1" value="radio1">
+          <input type="radio" name="group1" value="radio2">
+          <span>A radio button must be toggled</span>
+          <h6>Standalone Elements</h6>
+          <hr>
+          <input type="text" placeholder="required">
+          <input type="submit">
+        </form>
+        <section id="form-1-sample" class="code-sample large-6 columns">
+          <header>
+            <h4>Options:</h4>
+          </header>
+            <pre>
+            <code class="javascript">
+// In angular-validate-rules.js:
+form_4: {
+  groups: [
+    {name: 'radios', container: false, required: 'input[name="group1"]', number_required: 1},
+    {name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
+  ]
+}
+            </code>
+            </pre>
+        </section>
+        <clearfix></clearfix>
+      </section>
+      <section class="scenarios">
+        <form ng-validation="form_5" class="large-6 columns">
+          <header>
+            <h4>Form Example 5 - Scenarios</h4>
+          </header>
+          <p>Must be 15 characters long with any two of the following criteria:</p>
+          <ul>
+            <li>At least 3 uppercase Characters</li>
+            <li>At least 3 numbers</li>
+            <li>At least 3 special characters</li>
+          </ul>
+          <input type="password" placeholder="Password Strength">
+          <input type="submit"><span id="pw1">Weak</span>
+          <hr>
+          </form>
+        <section id="form-1-sample" class="code-sample large-6 columns">
+          <header>
+            <h4>Options:</h4>
+          </header>
+            <pre>
+            <code class="javascript">
+// In angular-validate-rules.js:
+form_5: {
+  scenarios: [{name: 'password', options: {ui: '#pw1'}}]
+}
+            </code>
+            </pre>
+        </section>
+        <clearfix></clearfix>
+        <form ng-validation="form_6" class="large-6 columns">
+          <p>Must be 8 characters long with any two of the following criteria:</p>
+          <ul>
+            <li>At least 1 uppercase Characters</li>
+            <li>At least 1 numbers</li>
+            <li>At least 1 special characters</li>
+          </ul>
+          <input type="password" placeholder="Password Strength">
+          <input type="submit"><span id="pw2">Weak</span>
+        </form>
+        <section id="form-1-sample" class="code-sample large-6 columns">
+          <header>
+            <h4>Options:</h4>
+          </header>
+            <pre>
+            <code class="javascript">
+// In angular-validate-rules.js:
+form_5: {
+  scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
+}
+            </code>
+            </pre>
+        </section>
+        <clearfix></clearfix>
+      </section>
+    </section>
+  </section>
