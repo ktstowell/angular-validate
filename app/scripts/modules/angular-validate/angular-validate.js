@@ -17,7 +17,7 @@
  * @author  @ktstowell
  * @package https://github.com/ktstowell/angular-validate
  */
-angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules', function(ngRules) {
+angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules', 'ngValidationScenarios', function(ngRules, ngScenarios) {
 
   /*******************************************************************************************************
    * VALIDATION LAYER
@@ -45,6 +45,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     // Default parameters
     this.defaults = {
       rule: ngRules.default.rule, // Instance rule
+      async: false, // Async mode
       submit_toggle: 'disabled', // Attribute toggle default
       required: 'required', // Required toggle
       target: false, // Event target element to selectively show UI pass/fail
@@ -63,6 +64,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       success: function() {}, // Success callback
       validator: false, // custom validator blocks
       submit: false, //  default submit to false
+      scenarios: false, // Validation scenarios
       events: {
         keydown: ['text', 'password', 'email', 'textarea', 'tel'],
         keyup: ['text', 'password', 'email', 'textarea', 'tel'],
@@ -73,7 +75,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         mouseenter: [],
         mouseleave: []
       },
-      ignore: ['header', 'div', 'section', 'p', 'ul', 'li', 'article', 'aside', 'video', 'audio' , 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'span']
+      ignore: ['header', 'div', 'section', 'p', 'ul', 'li', 'article', 'aside', 'video', 'audio' , 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'span', 'label']
     };
 
     // Merge validaiton options
@@ -87,6 +89,12 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     this.sfe = this.opts.show_failed_elements; // Show passed elements shorthand
     this.sfol = this.opts.show_failed_on_load; // Show validation UI on immediate load
     this.spol = this.opts.show_passed_on_load; // Show validation UI on immediate load
+
+    // Rule fallback incase they created a rule declaratively and forgot to actually add the rule in the rules class
+    if(!this.opts.rule) {
+      console.warn('ngValidation: rule was declared in DOM but not found in angular-validate-rules.js. Falling back to default rule');
+      this.opts.rule = ngRules.default.rule;
+    }
 
     // REQUIRED ELEMENTS:
     // Used in determining validation state on page load.
@@ -114,7 +122,17 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     this.loadStates = {1: 'Not Loaded', 2: 'Loaded'};
 
     // Submit shorthand and element validation
-    this.sbmt = (this.opts.submit) ? el.this.opts.submit : el.querySelectorAll('input[type=submit]')[0];
+    if(this.opts.submit) {
+      this.sbmt = this.opts.submit;
+    } else {
+      if(el.querySelectorAll('input[type=submit]').length > 0) {
+        this.sbmt = el.querySelectorAll('input[type=submit]')[0];
+      } else {
+        if(!this.opts.async) {
+          throw "ngValidation: No submit button found and Async mode disabled, are you sure you need validation?";
+        }
+      }
+    }
 
     // Launch the validator
     this.pre_validate();
@@ -129,10 +147,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    */
   Validation.prototype.pre_validate = function() {
     var self = this;
-
-    // First check to see if the supplied submit button is valid,
-    // if not, reapply it.
-    (this.sbmt.length === 0)? this.sbmt = (this.sbmt['selector']) : '';
 
     // Build out exempt elements
     this.process_exempt(this.opts.exempt);
@@ -151,6 +165,13 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
 
     // Run the supplied on_load event
     this.opts.on_load.call(this);
+
+    // if any scenarios are found, run them
+    if(this.opts.scenarios) {
+      for(var i=0, j=this.opts.scenarios.length; i<j; i++) {
+        new ngScenarios([this.opts.scenarios[i].name], this.vChunk, this.opts.scenarios[i].options, this)
+      }
+    }
 
     // If validate on load is set, run a pre user interaction
     // state check so that the form can't be submittable w/o user
@@ -228,7 +249,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
             if(groups[i].required) {
               req_dom = dom[d].querySelectorAll(groups[i].required);
               for(var j=0, k=req_dom.length; j<k; j++) {
-                this.bind_selectors(req_dom[j], 'group_validate', groups[i]);
+                this.bind_selectors(req_dom[j], self.group_validate, groups[i], self);
                 // run a one time validation
                 if(req_dom[j].nodeType === 1) {
                   this.group_validate(req_dom[j], groups[i]);
@@ -238,7 +259,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
               // If in a container yet no required elements are specified, bind selectors to
               // everything
               for(var j=0, k=dom[d].childNodes.length; j<k; j++) {
-                this.bind_selectors(dom[d].childNodes[j], 'group_validate', groups[i]);
+                this.bind_selectors(dom[d].childNodes[j], self.group_validate, groups[i], self);
                 // run a one time validation
                 if(dom[d].childNodes[j].nodeType === 1) {
                   this.group_validate(dom[d].childNodes[j], groups[i]);
@@ -255,7 +276,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
             // Apply group tag
             dom[d].setAttribute(this.opts.group_toggle, groups[i].name);
             // Bind event listeners
-            this.bind_selectors(dom[d], 'group_validate', groups[i]);
+            this.bind_selectors(dom[d], self.group_validate, groups[i], self);
             // run a one time validation
             if(dom[d].nodeType === 1) {
               this.group_validate(dom[d], groups[i]);
@@ -292,7 +313,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         this.exempt.indexOf(el.childNodes[i]) === -1 &&
           // and not the submit element
           el.childNodes[i] !== this.sbmt && !el.childNodes[i].hasAttribute(this.opts.group_toggle)) {
-          console.log(el.childNodes[i].localName);
           // Only add to required array if not in ignore array
           if(this.opts.ignore.indexOf(el.childNodes[i].localName) === -1) {
             // add required class
@@ -300,7 +320,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
             // Add to required array
             this.required.push(el.childNodes[i]);
             // Bind events
-            this.bind_selectors(el.childNodes[i], 'validate');
+            this.bind_selectors(el.childNodes[i], self.validate, '', self);
             // Recurse
             this.process_required(el.childNodes[i]);
         }
@@ -314,7 +334,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    *
    * @description: binds supplied selector with matching event types from the events object
    */
-  Validation.prototype.bind_selectors = function(el, cb, cb_args) {
+  Validation.prototype.bind_selectors = function(el, cb, cb_args, scope) {
     var self = this;
 
     // Start loop
@@ -331,7 +351,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
               // we may have to find other keycodes that do the same thing, e.g 46
               if(e.type !== "keydown" || e.type === "keydown" && e.keyCode === 8 || e.keyCode === 46) {
                 // we 'dynamicize' the callback here as it can either be the group validator or the standalon validator
-                self[cb].call(self, this, cb_args, e);
+                cb.call(scope, this, cb_args, e);
               }
             }, false);
           }
@@ -361,18 +381,18 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         // If it passes
         if(this.opts.validator[el.type].call(this, el, args, e)) {
           // Both stock, custom pass
-          this.epic_win(el)
+          this.epic_win(el, false, e)
         } else {
           // Custom failed
-          this.epic_fail(el);
+          this.epic_fail(el, false, e);
         }
       } else {
         // Stock validator passed, custom validator not found === validation-passed.
-        this.epic_win(el);
+        this.epic_win(el, false, e);
       }
     } else {
       // stock validator failed
-      this.epic_fail(el);
+      this.epic_fail(el, false, e);
     }
 
     // Process ready State
@@ -385,9 +405,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     if(typeof args == 'number' && args === this.required.length-1) {
       this.loadState = 2; // Loaded
     }
-    
-    // Run the isntance rule
-    this.instance_rule(el, args);
   };
 
   /**
@@ -417,30 +434,30 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
             if(group.passed.indexOf(el) === -1) {
               group.passed.push(el);
             }
-            this.epic_win(el, true);
+            this.epic_win(el, true, e);
           } else {
             // Custom failed, update the group passed object
             if(group.passed.indexOf(el) !== -1) {
               group.passed.splice(group.passed.indexOf(el), 1);
             }
-            this.epic_fail(el, true);
+            this.epic_fail(el, true, e);
           }
         } else {
           // No custom validator yet stock validator passed. Update group passed property.
           if(group.passed.indexOf(el) === -1) {
             group.passed.push(el);
           }
-          this.epic_win(el, true);
+          this.epic_win(el, true, e);
         }
       } else {
         // Stock validator failed, update group passed property
         if(group.passed.indexOf(el) !== -1) {
           group.passed.splice(group.passed.indexOf(el), 1);
         }
-        this.epic_fail(el, true)
+        this.epic_fail(el, true, e)
       }
     } else {
-      throw "ngValidation: specified and fallback validtor not found. Hmmmm, this shouldn't happen"
+      throw "ngValidation: specified and fallback validtor not found. Hmmmm, this shouldn't happen."
     }
     
     // Compare the group passed object with the group rule.
@@ -457,8 +474,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         this.groups_failed.push(group.name);
       }
     }
-    // Run the instance rule.
-    this.instance_rule(el, e)
   };
 
   /**
@@ -466,7 +481,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    * @param  {[type]} el
    * @return {[type]}
    */
-  Validation.prototype.epic_win = function(el, group) {
+  Validation.prototype.epic_win = function(el, group, e) {
     // Update failed collection
     if(!group) this.total_passed(el);
     // Only toggle the UI helper on required elements
@@ -478,6 +493,8 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         el.classList.remove(this.ft);
       }
     }
+    // Run the instance rule.
+    this.instance_rule(el, e)
   };
 
   /**
@@ -485,7 +502,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    * @param  {[type]} el
    * @return {[type]}
    */
-  Validation.prototype.epic_fail = function(el, group) {
+  Validation.prototype.epic_fail = function(el, group, e) {
     // Update failed collection
     if(!group) this.total_failed(el)
     // Only bother with the UI helper on required elements
@@ -497,6 +514,8 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         el.classList.remove(this.pt);
       }
     }
+    // Run the instance rule.
+    this.instance_rule(el, e)
   };
 
   /**
@@ -603,6 +622,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    *               If a validator that does not exist is requested, it falls back
    *               to text validation.
    */
+  
   Validation.prototype.validators = {
     /**
      * TEXT VALIDATOR
