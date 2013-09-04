@@ -1,26 +1,30 @@
 'use strict';
 
 /*******************************************************************************************************
- * ANGULAR VALIDATION RULES
+ * ANGULAR VALIDATION SCENARIOS
  *******************************************************************************************************
  *
- * @description
- * @dependencies
- * @injections
+ * @description Scenario loader
  * @author Ken Stowell
  */
- angular.module('ng-validation').factory('ngValidationScenarios', function() {
-  /*******************************************************************************************************
-   * VALIDATION RULES
-   *******************************************************************************************************
-   * @description
-   * @dependency
-   * @author         
-   */
-  var Scenarios = {
-    
-  };
+ angular.module('ng-validation').factory('ngValidationScenarios', ['ngValidationScenariosPasswordStrength', function(Password) {
 
-  // Return the rules object
-  return Scenarios;
- });
+  /*******************************************************************************************************
+   * Scenarios
+   *******************************************************************************************************
+   * @description Constructor for loading individual scenarios
+   */
+   var Scenarios = function(scenario, form, opts, root) {
+    // Mapping object
+    var scenarios = {
+      password: Password // Password Strength
+    };
+
+    // Load if available.
+    if(scenarios.hasOwnProperty(scenario)) {
+      new scenarios[scenario](form, opts, root);
+    }
+   };
+
+   return Scenarios;
+ }]);
