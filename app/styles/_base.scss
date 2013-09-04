@@ -30,5 +30,15 @@ hr {
 }
 
 form hr {
+	margin-top:10px;
 	box-shadow: none;
+}
+
+.scenarios form span {
+	line-height: 38px;
+	padding: 0 5px;
+}
+
+input[type="submit"] {
+	margin: 0.5em 0;
 }

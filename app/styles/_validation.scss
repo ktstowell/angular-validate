@@ -4,7 +4,7 @@ input.failed-validation:focus,
 textarea.failed-validation,
 textarea.failed-validation:active,
 textarea.failed-validation:focus {
-  background-color: rgba(255, 0, 0, .6);
+  background-color: #CD493E;
   border: 1px groove red;
 }
 
@@ -14,7 +14,7 @@ input.passed-validation:focus,
 textarea.passed-validation,
 textarea.passed-validation:active,
 textarea.passed-validation:focus {
-  background-color: rgba(0, 255, 0, .6);
+  background-color: #6A9351;
   border: 1px groove green;
 }
 
