@@ -23,3 +23,14 @@ pre {
 		text-align: left;
 	}
 }
+
+li {
+	pre {
+		display: inline-block;
+    position: relative;
+    top: 14px;
+		code {
+      padding: .1em .2em;
+		}
+	}
+}
