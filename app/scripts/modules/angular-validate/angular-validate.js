@@ -319,11 +319,11 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
             el.childNodes[i].classList.add(this.opts.required);
             // Add to required array
             this.required.push(el.childNodes[i]);
-            // Bind events
-            this.bind_selectors(el.childNodes[i], self.validate, '', self);
-            // Recurse
-            this.process_required(el.childNodes[i]);
-        }
+          }
+          // Bind events
+          this.bind_selectors(el.childNodes[i], self.validate, '', self);
+          // Recurse
+          this.process_required(el.childNodes[i]);
       }
     }
   };
