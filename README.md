@@ -1,0 +1,1 @@
+For documentation/demos, please see: http://ktstowell.github.io/angular-validate
