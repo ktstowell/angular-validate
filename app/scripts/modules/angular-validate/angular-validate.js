@@ -75,7 +75,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         mouseenter: [],
         mouseleave: []
       },
-      ignore: ['header', 'div', 'section', 'p', 'ul', 'li', 'article', 'aside', 'video', 'audio' , 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'span', 'label']
+      ignore: ['header', 'div', 'section', 'p', 'ul', 'li', 'article', 'aside', 'video', 'audio' , 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'span', 'label', 'fieldset', 'legend']
     };
 
     // Merge validaiton options
@@ -128,8 +128,12 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       if(el.querySelectorAll('input[type=submit]').length > 0) {
         this.sbmt = el.querySelectorAll('input[type=submit]')[0];
       } else {
-        if(!this.opts.async) {
-          throw "ngValidation: No submit button found and Async mode disabled, are you sure you need validation?";
+        if(el.querySelectorAll('button[type=submit]').length > 0) {
+          this.sbmt = el.querySelectorAll('button[type=submit]')[0];
+        } else {
+          if(!this.opts.async) {
+            throw "ngValidation: No submit button found and Async mode disabled, are you sure you need validation?";
+          }
         }
       }
     }
