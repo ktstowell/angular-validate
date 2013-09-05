@@ -195,6 +195,14 @@ module.exports = function (grunt) {
           src: '*.js',
           dest: '<%= yeoman.dist %>/scripts'
         }]
+      },
+      build: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>/../build/',
+          src: '*.js',
+          dest: '<%= yeoman.dist %>/../build/min'
+        }]
       }
     },
     uglify: {
@@ -202,6 +210,15 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.dist %>/scripts/scripts.js': [
             '<%= yeoman.dist %>/scripts/scripts.js'
+          ]
+        }
+      },
+      build: {
+        files: {
+          '<%= yeoman.dist %>/../build/min/ngValidationCoreNoRules.js': [
+            '<%= yeoman.dist %>/../build/angular-validate.js',
+            '<%= yeoman.dist %>/../build/angular-validate-scenarios.js',
+            '<%= yeoman.dist %>/../build/angular-validate-scenarios-password-strength.js'
           ]
         }
       }
@@ -246,6 +263,18 @@ module.exports = function (grunt) {
             'scripts/modules/angular-validate/*'
           ]
         }]
+      },
+      min: {
+        files: [{
+          expand: true,
+          flatten: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.app %>/../build/min',
+          src: [
+            'scripts/modules/angular-validate/*'
+          ]
+        }]
       }
     }
   });
@@ -277,11 +306,12 @@ module.exports = function (grunt) {
     'htmlmin',
     'concat',
     'copy:dist',
-    'ngmin',
-    'uglify',
+    'ngmin:dist',
+    'uglify:dist',
     'rev',
     'usemin',
-    'copy:main'
+    'copy:main',
+    'uglify:build'
   ]);
 
   grunt.registerTask('default', ['build']);
