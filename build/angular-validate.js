@@ -48,7 +48,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       async: false, // Async mode
       submit_toggle: 'disabled', // Attribute toggle default
       required: 'required', // Required toggle
-      target: false, // Event target element to selectively show UI pass/fail
       passed_toggle: 'passed-validation', // Passed toggle default
       failed_toggle: 'failed-validation', // Failed toggle default
       show_failed_elements: true, // Updates the UI to show failed elements

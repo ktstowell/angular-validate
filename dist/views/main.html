@@ -64,6 +64,108 @@
       <hr>
     </header>
     <section>
+      <h6>Default Implementation:</h6>
+      <ol>
+        <li>Inject the validation module into your App's module declaration: <pre><code>angular.module('MyApp', ['ng-validation'])</code></pre></li>
+        <li>Inject the validation module's service into a controller that will be using it: <pre><code>angular.module('MyApp', []).controller('MainCtrl', function($scope, ngValidation) {})</code></pre></li>
+        <li>From here, if you wish a form to be validated, add the attribute <pre><code>ng-validation</code></pre> to the root of the form/section containing the form fields.</li>
+      </ol>
+      <h6>Custom Processing</h6>
+      <p>If you need more than the defaults, such as adding a scenario, follow these steps:</p>
+      <ol>
+        <li>To same form/section you added <pre><code>ng-validation</code></pre> to, add an attribute name: <pre><code>ng-validation="myForm"</code></pre>. Please use only alpha-numeric characters.</li>
+        <li>Once you added the name, open up the angular-validate-rules.js file, and add a new object inside of <pre><code>var Rules = {}</code></pre> named verbatim after the attribute value of the form. This sets up the declarative relationship</li>
+        <li>You can now give your form custom options:</li>
+      </ol>
+      <h6>Available options:</h6>
+      <ul>
+        <li>
+          <ul class="panel">
+            <li>Name: rule</li>
+            <li>Type: function</li>
+            <li>
+            Arguments (order matters):
+              <ul>
+                <li>Sel: DOM object of the root of the form</li>
+                <li>el: DOM object of the current event target</li>
+                <li>e: current event object</li>
+              </ul>
+            </li>
+            <li>Scope (this): The root validation class</li>
+            <li>Description: If you want to completely ignore the default rule for determining whether or not a form is valid, add your own function here.</li>
+            <li>Example:</li>
+            <hr>
+            <li>
+<pre>
+<code>
+myForm: {
+  rule: function(sel, el, e) {
+    // custom processing here
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel">
+            <li>Name: exempt</li>
+            <li>Type: array</li>
+            <li>Description: An array containing an indefinite number of indexes of strings that correlate to elements you wish to avoid validation processing. It uses a jQuery like selector syntax, just without the $().</li>
+            <li>Example:</li>
+            <hr>
+            <li>
+<pre>
+<code>
+myForm: {
+  // This will ignore all elements with the class of ignore
+  exempt: ['.ignore']
+}
+</code>
+</pre>
+            </li>
+          </ul>
+         <!--  <ul class="panel">
+            <li>Name: submit</li>
+            <li>Type: string</li>
+            <li>Description: Specify a custom submit clicky.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  // This will allow an element with the ID of 'mySpecialSubmit' to act as a submit button.
+  submit: ['#mySpecialSubmit']
+}
+</code>
+</pre>
+            </li>
+          </ul> -->
+          <ul class="panel">
+            <li>Name: scenarios</li>
+            <li>Type: array of objects</li>
+            <li>Description: An array containing the desired validation scenarios to use.</li>
+            <li>Example:</li>
+            <hr>
+            <li>
+<pre>
+<code>
+myForm: {
+  // This will load the scenarios you wish to use (example is using the password scenario)
+  scenarios: [{name: 'password', options: {ui: '.meter', acceptance: 'strong'}}]
+}
+</code>
+</pre>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <header>
+        <h3>Demos:</h3>
+        <hr>
+      </header>
       <form ng-validation="form_1" class="large-6 columns">
         <header>
           <h4>Form Example 1 - Default</h4>
