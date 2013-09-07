@@ -166,15 +166,15 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       self.post_validate.call(self, this, e);
     }, false);
 
-    // Run the supplied on_load event
-    this.opts.on_load.call(this);
-
     // if any scenarios are found, run them
     if(this.opts.scenarios) {
       for(var i=0, j=this.opts.scenarios.length; i<j; i++) {
         new ngScenarios([this.opts.scenarios[i].name], this.vChunk, this.opts.scenarios[i].options, this)
       }
     }
+    
+    // Run the supplied on_load event
+    this.opts.on_load.call(this);
 
     // If validate on load is set, run a pre user interaction
     // state check so that the form can't be submittable w/o user
@@ -319,7 +319,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
           // Only add to required array if not in ignore array
           if(this.opts.ignore.indexOf(el.childNodes[i].localName) === -1) {
             // add required class
-            el.childNodes[i].classList.add(this.opts.required);
+            // el.childNodes[i].classList.add(this.opts.required);
             // Add to required array
             this.required.push(el.childNodes[i]);
           }
@@ -376,7 +376,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         validator = (this.validators[el.type]) ? el.type : 'text';
 
     el = el || {};
-    
+    console.log('validate');
     // If the validator is found and passes
     if(this.validators[validator] && this.validators[validator].call(this, el)) {
       // If a custom validator is found and returns true
@@ -488,7 +488,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     // Update failed collection
     if(!group) this.total_passed(el);
     // Only toggle the UI helper on required elements
-    if(el.classList.contains(this.opts.required) || group) {
+    if(this.required.indexOf(el) !== -1 || group) {
       if(this.loadState === 2 || this.spol && this.loadState === 1) {
         // If the UI helper is true, add the style class
         if(this.spe) el.classList.add(this.pt);
@@ -509,7 +509,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     // Update failed collection
     if(!group) this.total_failed(el)
     // Only bother with the UI helper on required elements
-    if(el.classList.contains(this.opts.required) || group) {
+    if(this.required.indexOf(el) !== -1 || group) {
       if(this.loadState === 2 || this.sfol && this.loadState === 1) {
         // If the UI helper is true, add the style class
         if(this.sfe) el.classList.add(this.ft);

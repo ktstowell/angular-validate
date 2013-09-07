@@ -7,7 +7,7 @@
  * @description Scenario loader
  * @author Ken Stowell
  */
- angular.module('ng-validation').factory('ngValidationScenarios', ['ngValidationScenariosPasswordStrength', function(Password) {
+ angular.module('ng-validation').factory('ngValidationScenarios', ['ngValidationScenariosPasswordStrength', 'ngValidationScenariosComparator', function(Password, Comparator) {
 
   /*******************************************************************************************************
    * Scenarios
@@ -17,7 +17,8 @@
    var Scenarios = function(scenario, form, opts, root) {
     // Mapping object
     var scenarios = {
-      password: Password // Password Strength
+      password: Password, // Password Strength
+      comparator: Comparator // Field comparison
     };
 
     // Load if available.

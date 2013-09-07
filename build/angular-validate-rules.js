@@ -66,6 +66,13 @@
      */
     form_6: {
       scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
+    },
+    /**
+     * FORM 7 RULE
+     * @type {Object}
+     */
+    form_7: {
+      scenarios: [{name: 'comparator', options: {master: ['#master'], slaves: ['.slave'], fields: ['input[type="email"]'], ui:{element:'#message'}}}]
     }
   };
 
