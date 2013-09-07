@@ -281,7 +281,7 @@ form_4: {
       <section class="scenarios">
         <form ng-validation="form_5" class="large-6 columns">
           <header>
-            <h4>Form Example 5 - Scenarios</h4>
+            <h4>Form Example 5 - Scenarios:Password Strength</h4>
           </header>
           <p>Must be 15 characters long with any two of the following criteria:</p>
           <ul>
@@ -326,6 +326,33 @@ form_5: {
 // In angular-validate-rules.js:
 form_5: {
   scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
+}
+            </code>
+            </pre>
+        </section>
+        <clearfix></clearfix>
+      </section>
+      <section>
+        <form ng-validation="form_7" class="large-6 columns">
+          <header>
+            <h4>Form Example 6 - Scenarios: Comparison</h4>
+          </header>
+          <input type="email" placeholder="email" id="master">
+          <input type="email" placeholder="confirm email" class="slave">
+          <input type="email" placeholder="confirm email" class="slave">
+          <p id="message"></p>
+          <input type="submit">
+          <hr />
+          </form>
+        <section id="form-1-sample" class="code-sample large-6 columns">
+          <header>
+            <h4>Options:</h4>
+          </header>
+            <pre>
+            <code class="javascript">
+// In angular-validate-rules.js:
+form_5: {
+  scenarios: [{name: 'comparator', options: {elements: ['input[type="email"]']}}]
 }
             </code>
             </pre>
