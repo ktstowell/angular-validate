@@ -6,6 +6,10 @@
  *
  * @description This scenario assesses password strength and effects form validity
  * @author Ken Stowell
+ *
+ * ## Refactor Thoughts:
+ *
+ * 
  */
  angular.module('ng-validation').factory('ngValidationScenariosPasswordStrength', function() {
   /*******************************************************************************************************
@@ -21,40 +25,35 @@
     this.defaults = {
       standards: {
         strong: {
-          id:3, // Id's used in relationship building
-          uppercase: 3, // Minimum uppsercase chars to be considered 'strong'
-          number: 3, // Minimum numbers to be considered 'strong'
-          special: 3, // Minimum number of special chars to be considered 'strong'
-          length: 15, // Required character count
-          ui: 'Could defeat a small clan of ninjas.'
+          length: 12,
+          ui: 'Could defeat a small clan of ninjas.',
+          score: 28
         },
         medium: {
-          id:2,
-          uppercase: 1,
-          number: 1,
-          special: 1,
           length: 8,
-          ui: 'Meh'
+          ui: 'Meh',
+          score: 15
         },
         weak: {
-          id:1,
-          uppercase: 0,
-          number: 0,
-          special: 0,
           length: 5,
-          ui: 'pansy'
+          ui: 'pansy',
+          score: 8
         }
       },
       acceptance: 'strong', // What level needs to be meet to be considered valid
       ui : '' // DOM, empty by default.
     };
     
+    // Scenario score meter
+    this.score;
+    // Value point system, totally arbitrary but immutable by user
+    this.values = {length: 1, uppercase: 4, number: 4, special: 6};
     // Merge options
     this.opts = root.extend(this.defaults, opts);
     // DOM
     this.password = form.querySelectorAll('input[type="password"]')
     // Sate DOM
-    this.state_ui = (this.opts.ui)? form.querySelectorAll(this.opts.ui)[0] : [];
+    this.strength_ui = (this.opts.ui)? form.querySelectorAll(this.opts.ui)[0] : [];
     // Criteria tracker
     this.strengths = {uppercase: 'weak', number: 'weak', special: 'weak'};
     // Root class, passed in as argument
@@ -78,14 +77,14 @@
   PasswordStrength.prototype.check_password_strength = function(el, e) {
     var self = this,
         val = el.value, // String value of dom target
-        next_standard, // used to get visibilty into the next standard up in the chain
         values = { // Object to hold regex return vals.
           uppercase: 0,
           number: 0,
           special: 0,
           length: 0
         };
-
+    // Set the score to 0 in every callback - it's easier than tracking state
+    this.score = 0;
     // Number of uppercase characters
     values.uppercase = val.replace(/[^A-Z]/g, "").length;
     // Number of numbers
@@ -94,99 +93,37 @@
     values.special = val.replace(/[^\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\{|\}|\[|\]]/g, "").length;
     // Length
     values.length = val.length;
-    
-    // Find the next standard
-    for(var standard in self.opts.standards) {
-      for(var criteria in self.opts.standards[standard]) {
-        next_standard = (standard == 'weak')? 'medium' : 
-          (standard == 'medium')? 'strong' 
-            : false;
-        
-        // Loop through all criteria except ui, length and id.
-        if(criteria !== "ui" && criteria !== "length" && criteria !== "id" && values[criteria] !== undefined) {
-          // if the values are less than the current criteria
-          if(values[criteria] <= self.opts.standards[standard][criteria]) {
-            // Set to current standard
-            self.strengths[criteria] = standard;
-          } else {
-            // If a next standard is there i.e we aren't at the cieling
-            if(next_standard) {
-              // If the current values are now greater than the current standard but less than the next standard
-              if(values[criteria] < self.opts.standards[next_standard][criteria]) {
-                // keep the array at the same standard
-                self.strengths[criteria] = standard;
-              }
-            } else {
-              // No next standard present, set to current.
-              self.strengths[criteria] = standard;
-            }
-          }
-        }
-      }
-    }
-    // Process acceptance
-    this.process_acceptance(el, e);
-  };
 
-  /**
-   * PROCESS ACCEPTANCE
-   * @param  {DOM} el Event element
-   * @param  {Object} e  Event object
-   * @description [description]
-   */
-  PasswordStrength.prototype.process_acceptance = function(el, e) {
-    var self = this,
-        strengths = {weak:0, medium: 0, strong:0}, // Counter
-        arr = [], // Array used in determining highest counter
-        max, // Max/highest counter
-        state = 'weak'; // Default state when this function gets called
-
-    // Loop through strengths and increment counters.
-    for(var item in this.strengths) {
-      if(strengths[this.strengths[item]] !== undefined) {
-        strengths[this.strengths[item]]++;
-      }
+    // Calculate the score
+    for(var value in values) {
+      // times the number of occurences with the point values
+      this.score += (values[value] * this.values[value])
     }
 
-    // Convert object keys into an array
-    arr = Object.keys(strengths).map(function(key) {
-      return strengths[key];
-    });
+    // Update the UI based on score
+    if(this.score >= this.opts.standards.strong.score) {
+      // Strong or higher
+      this.strength_ui.textContent = this.opts.standards.strong.ui;
+    } else if (this.score >= this.opts.standards.medium.score) {
+      // Medium or higher
+      this.strength_ui.textContent = this.opts.standards.medium.ui;
+    } else if (this.score < this.opts.standards.medium.score) {
+      // Less than medium
+      this.strength_ui.textContent = this.opts.standards.weak.ui;
+    } 
 
-    // Get the largest key
-    max = Math.max.apply(null, arr);
-
-    // Loop through local strength counter
-    for(var strength in strengths) {
-      // If this value of the strength counter
-      // is the highest in the strengths object
-      if(strengths[strength] === max) {
-        // Assign the state
-        state = strength;
-        // Update the UI
-        this.state_ui.textContent = this.opts.standards[state].ui;
-        // Here we break upon matching because it is possible for
-        // 'max' to match to two or more strengths. Since the parsing is top down, we can
-        // stop at the first encounter. This prevents it from being 'strong' in situations when weak and strong
-        // have the same counter.
-        break;
-      }
-    };
-
-    // Always ensure the character count.
-    if(el.value.length >= this.opts.standards[this.opts.acceptance].length) {
-      // If the standard id is greater than or equal to the acceptance id.
-      // This ensures that if a form specifies 'medium' as their acceptance, strong will still
-      // work since strong > medium.
-      if(this.opts.standards[state].id >= this.opts.standards[this.opts.acceptance].id) {
+    // If the score meets the acceptance
+    if(this.score >= this.opts.standards[this.opts.acceptance].score) {
+      // Always ensure the character count.
+      if(val.length >= this.opts.standards[this.opts.acceptance].length) {
         // Win!
         this.root.epic_win(el, false, e);
       } else {
-        // fail
+        // Score meet the acceptance but is still too short: fail
         this.root.epic_fail(el, false, e);
       }
     } else {
-      // fail
+      // Score didn't meet acceptance: fail
       this.root.epic_fail(el, false, e);
     }
   };

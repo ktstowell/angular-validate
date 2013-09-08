@@ -376,7 +376,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         validator = (this.validators[el.type]) ? el.type : 'text';
 
     el = el || {};
-    console.log('validate');
+    
     // If the validator is found and passes
     if(this.validators[validator] && this.validators[validator].call(this, el)) {
       // If a custom validator is found and returns true
