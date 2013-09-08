@@ -218,7 +218,8 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/../build/min/ngValidationCoreNoRules.js': [
             '<%= yeoman.dist %>/../build/angular-validate.js',
             '<%= yeoman.dist %>/../build/angular-validate-scenarios.js',
-            '<%= yeoman.dist %>/../build/angular-validate-scenarios-password-strength.js'
+            '<%= yeoman.dist %>/../build/angular-validate-scenarios-password-strength.js',
+            '<%= yeoman.dist %>/../build/angular-validate-scenarios-comparator.js'
           ]
         }
       }
