@@ -739,15 +739,69 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    * @description Loads validation class
    * @author         
    */
-  (function() {
+  var API = {};
+
+  /**
+   * ADD RULE
+   * @param {String} name name of rule
+   * @param {Object} rule rule object
+   */
+  API.add_rule = function(name, rule) {
+    var bad = "@!#$%^&*(){}[]/-+=|\"' ";
+    var isBad = [];
+
+    // Check for bad name characters.
+    for(var i=0, j=name; i<j.length; i++) {
+      for(var k=0, l=bad; k<l.length; k++) {
+        if(j.charAt(i) == l[k]) {
+          isBad.push(l[k]);
+        }
+      }
+    }
+    
+    // If no bad characters found
+    if(isBad.length === 0) {
+      // If rule has an existing name
+      if(ngRules.hasOwnProperty(name)) {
+        // Just warn teh console and proceed.
+        console.warn('ngValidation: Form ['+name+'] already exists, overwriting.')
+      }
+      // Add of rules object
+      ngRules[name] = rule;
+    } else {
+      // Bad characters found, notify the user.
+      throw "ngValidation: add_rule error, please use only alpha-numeric characters or _ (underscores) for the name. Rule [ "+name+" ] contained: [ "+isBad+" ]";
+    }
+
+    // Return chainable object
+    return API;
+  };
+
+  /**
+   * INIT
+   * @description Crawls the page for ng-validation attribtes, launches form validation.
+   * @return {Object} API object.
+   */
+  API.init = function() {
     var qualifier = 'ng-validation', // String for DOM detection
         rules = ngRules, // Angular Rules
         selector = document.querySelectorAll('*['+qualifier+']');
 
-    // Loop through result set
+    // Loop through DOM reuslt set.
     for(var i=0,j=selector.length; i<j; i++) {
-      // Instatiate new validation instance with DOM and rule
+      // We don't do any error checking here because the Validation class provides the fallback.
+      // We simply warn the console that we will be using defaults
+      if(!rules.hasOwnProperty(selector[i].getAttribute(qualifier))) {
+        console.warn('ngValidation: Rule [ '+selector[i].getAttribute(qualifier)+' ] declared in DOM but not found in Rules object. Using defaults. Make sure to \n use [ngValidation.add_rule] to add a custom rule.');
+      }
+      // Instatiate new validation instance with DOM and rule.
       new Validation(selector[i], rules[selector[i].getAttribute(qualifier)]);
     }
-  })();
+
+    // Return chainable object.
+    return API;
+  };
+
+  // return API as ngValidation
+  return API;
 }]);
