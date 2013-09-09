@@ -68,13 +68,14 @@
       <ol>
         <li>Inject the validation module into your App's module declaration: <pre><code>angular.module('MyApp', ['ng-validation'])</code></pre></li>
         <li>Inject the validation module's service into a controller that will be using it: <pre><code>angular.module('MyApp', []).controller('MainCtrl', function($scope, ngValidation) {})</code></pre></li>
+        <li>Inside the controller, include: <pre><code>ngValidation.init();</code></pre></li>
         <li>From here, if you wish a form to be validated, add the attribute <pre><code>ng-validation</code></pre> to the root of the form/section containing the form fields.</li>
       </ol>
       <h6>Custom Processing</h6>
       <p>If you need more than the defaults, such as adding a scenario, follow these steps:</p>
       <ol>
-        <li>To same form/section you added <pre><code>ng-validation</code></pre> to, add an attribute name: <pre><code>ng-validation="myForm"</code></pre>. Please use only alpha-numeric characters.</li>
-        <li>Once you added the name, open up the angular-validate-rules.js file, and add a new object inside of <pre><code>var Rules = {}</code></pre> named verbatim after the attribute value of the form. This sets up the declarative relationship</li>
+        <li>To the same form/section you added <pre><code>ng-validation</code></pre> to, add an attribute name: <pre><code>ng-validation="myForm"</code></pre>. Please use only alpha-numeric characters.</li>
+        <li>Once you've added the name, open up the controller where you called <pre><code>ngValidation.init()</code></pre> and add your rules as follows: <pre><code>ngValidation.add_rule('myForm', {options}).init();</code></pre> make sure the name of the rule is the same name you gave your form in the markup. And of course, dont forget to call <pre><code>.init();</code></pre>When you're done adding all the rules you'll need.</li>
         <li>You can now give your form custom options:</li>
       </ol>
       <h6>Available options:</h6>
@@ -196,7 +197,7 @@ myForm: {
           <textarea rows="4" cols="14"></textarea>
           <input type="submit">
         </form>
-        <section id="form-1-sample" class="code-sample large-6 columns">
+        <section id="form-2-sample" class="code-sample large-6 columns">
           <header>
             <h4>Options:</h4>
           </header>
@@ -220,17 +221,17 @@ myForm: {
           <textarea rows="4" cols="14" placeholder="required"></textarea>
           <input type="submit">
         </form>
-        <section id="form-1-sample" class="code-sample large-6 columns">
+        <section id="form-3-sample" class="code-sample large-6 columns">
           <header>
             <h4>Options:</h4>
           </header>
             <pre>
             <code class="javascript">
-// In angular-validate-rules.js:
-form_3: {
+// In the ngValidation injected controller:
+ngValidation.add_rule('form_3', {
   // example using class name and id's
   exempt: ['.exempt', '#exempt']
-}
+}).init();
             </code>
             </pre>
         </section>
@@ -260,19 +261,19 @@ form_3: {
           <input type="text" placeholder="required">
           <input type="submit">
         </form>
-        <section id="form-1-sample" class="code-sample large-6 columns">
+        <section id="form-4-sample" class="code-sample large-6 columns">
           <header>
             <h4>Options:</h4>
           </header>
             <pre>
             <code class="javascript">
-// In angular-validate-rules.js:
-form_4: {
+// In the ngValidation injected controller:
+ngValidation.add_rule('form_4', {
   groups: [
     {name: 'radios', container: false, required: 'input[name="group1"]', number_required: 1},
     {name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
   ]
-}
+}).init();
             </code>
             </pre>
         </section>
@@ -293,16 +294,16 @@ form_4: {
           <input type="submit"><span id="pw1"></span>
           <hr>
           </form>
-        <section id="form-1-sample" class="code-sample large-6 columns">
+        <section id="form-5-sample" class="code-sample large-6 columns">
           <header>
             <h4>Options:</h4>
           </header>
             <pre>
             <code class="javascript">
-// In angular-validate-rules.js:
-form_5: {
+// In the ngValidation injected controller:
+ngValidation.add_rule('form_5', {
   scenarios: [{name: 'password', options: {ui: '#pw1'}}]
-}
+}).init();
             </code>
             </pre>
         </section>
@@ -317,16 +318,16 @@ form_5: {
           <input type="password" placeholder="Password Strength">
           <input type="submit"><span id="pw2"></span>
         </form>
-        <section id="form-1-sample" class="code-sample large-6 columns">
+        <section id="form-6-sample" class="code-sample large-6 columns">
           <header>
             <h4>Options:</h4>
           </header>
             <pre>
             <code class="javascript">
-// In angular-validate-rules.js:
-form_5: {
+// In the ngValidation injected controller:
+ngValidation.add_rule('form_5', {
   scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
-}
+}).init();
             </code>
             </pre>
         </section>
@@ -344,16 +345,16 @@ form_5: {
           <input type="submit">
           <hr>
           </form>
-        <section id="form-1-sample" class="code-sample large-6 columns">
+        <section id="form-7-sample" class="code-sample large-6 columns">
           <header>
             <h4>Options:</h4>
           </header>
             <pre>
             <code class="javascript">
-// In angular-validate-rules.js:
-form_5: {
+// In the ngValidation injected controller:
+ngValidation.add_rule('form_5', {
   scenarios: [{name: 'comparator', options: {elements: ['input[type="email"]']}}]
-}
+}).init();
             </code>
             </pre>
         </section>

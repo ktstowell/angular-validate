@@ -35,44 +35,6 @@
           return true;
         }
       }
-    },
-    /**
-     * FORM 3 RULE
-     * @type {Object}
-     */
-    form_3: {
-      exempt: ['.exempt', '#exempt']
-    },
-    /**
-     * FORM 4 RULE
-     * @type {Object}
-     */
-    form_4: {
-      groups: [
-        {name: 'radios', container: false, required: 'input[name="group1"]', number_required: 1},
-        {name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
-      ]
-    },
-    /**
-     * FORM 5 RULE
-     * @type {Object}
-     */
-    form_5: {
-      scenarios: [{name: 'password', options: {ui: '#pw1'}}]
-    },
-    /**
-     * FORM 6 RULE
-     * @type {Object}
-     */
-    form_6: {
-      scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
-    },
-    /**
-     * FORM 7 RULE
-     * @type {Object}
-     */
-    form_7: {
-      scenarios: [{name: 'comparator', options: {master: ['#master'], slaves: ['.slave'], fields: ['input[type="email"]'], ui:{element:'#message'}}}]
     }
   };
 
