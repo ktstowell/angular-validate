@@ -284,14 +284,25 @@ ngValidation.add_rule('form_4', {
           <header>
             <h4>Form Example 5 - Scenarios:Password Strength</h4>
           </header>
-          <p>Must be 15 characters long with any two of the following criteria:</p>
-          <ul>
-            <li>At least 3 uppercase Characters</li>
-            <li>At least 3 numbers</li>
-            <li>At least 3 special characters</li>
-          </ul>
+          <section>
+            <header>
+              <h6>Outline</h6>
+            </header>
+            <section>
+              <p>Password strength is deteremined by a scoring system. The score is calculated by the following point values:</p>
+              <ul>
+                <li>Length: 1 point. Every character contributes to the total length of the password.</li>
+                <li>Uppercase: 4 points.</li>
+                <li>Number: 4 points.</li>
+                <li>Special: 6 points. Characters such as '@!+=&amp;*^</li>
+              </ul>
+              The point values themselves are immutable, however the score considered to be passing can be set by custom options.
+            </section>
+            <hr />
+          </section>
+          <p>Must be 15 characters long and have an arbitrary passing score of 35:</p>
           <input type="password" placeholder="Password Strength">
-          <input type="submit"><span id="pw1"></span>
+          <input type="submit"><span id="pw1"></span><span id="score1"></span>
           <hr />
           </form>
         <section id="form-5-sample" class="code-sample large-6 columns">
@@ -302,21 +313,35 @@ ngValidation.add_rule('form_4', {
             <code class="javascript">
 // In the ngValidation injected controller:
 ngValidation.add_rule('form_5', {
-  scenarios: [{name: 'password', options: {ui: '#pw1'}}]
+  scenarios: [
+    {
+      name: 'password', 
+      options: {
+        standards: {
+          strong: {
+            ui: 'The Force is strong with this one'
+          },
+          medium: {
+            ui: 'Do or do not, there is no try'
+          },
+          weak: {
+            ui: 'I find your lack of faith disturbing'
+          }
+        }, 
+        ui: '#pw1', 
+        acceptance: 'strong'
+      }
+    }
+  ]
 }).init();
             </code>
             </pre>
         </section>
         <clearfix></clearfix>
         <form ng-validation="form_6" class="large-6 columns">
-          <p>Must be 8 characters long with any two of the following criteria:</p>
-          <ul>
-            <li>At least 1 uppercase Characters</li>
-            <li>At least 1 numbers</li>
-            <li>At least 1 special characters</li>
-          </ul>
+          <p>Must be 8 characters long and have a passing score of 15</p>
           <input type="password" placeholder="Password Strength">
-          <input type="submit"><span id="pw2"></span>
+          <input type="submit"><span id="pw2"></span><span id="score2"></span>
         </form>
         <section id="form-6-sample" class="code-sample large-6 columns">
           <header>
@@ -326,7 +351,34 @@ ngValidation.add_rule('form_5', {
             <code class="javascript">
 // In the ngValidation injected controller:
 ngValidation.add_rule('form_5', {
-  scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
+  scenarios: [
+    {
+      name: 'password', 
+      options: {
+        standards: {
+          strong: {
+            ui: "Strong"
+          },
+          medium: {
+            ui: 'Acceptable'
+          },
+          mostly_strong: {
+            ui: 'Almost strong',
+            score: 22
+          },
+          weak: {
+            ui: 'Too weak'
+          },
+          mostly_weak: {
+            ui: 'Almost there',
+            score: 11
+          }
+        }, 
+        ui: '#pw2', 
+        acceptance: 'medium'
+      }
+    }
+  ]
 }).init();
             </code>
             </pre>
