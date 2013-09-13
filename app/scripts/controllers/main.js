@@ -20,9 +20,55 @@ angular.module('ngValidateApp')
         {name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
       ]
     }).add_rule('form_5', {
-      scenarios: [{name: 'password', options: {ui: '#pw1'}}]
+      scenarios: [
+        {
+          name: 'password', 
+          options: {
+            standards: {
+              strong: {
+                ui: 'The Force is strong with this one'
+              },
+              medium: {
+                ui: 'Do or do not, there is no try'
+              },
+              weak: {
+                ui: 'I find your lack of faith disturbing'
+              }
+            }, 
+            ui: '#pw1', 
+            acceptance: 'strong'
+          }
+        }
+      ]
     }).add_rule('form_6', {
-      scenarios: [{name: 'password', options: {ui: '#pw2', acceptance: 'medium'}}]
+      scenarios: [
+        {
+          name: 'password', 
+          options: {
+            standards: {
+              strong: {
+                ui: "Strong"
+              },
+              medium: {
+                ui: 'Acceptable'
+              },
+              mostly_strong: {
+                ui: 'Almost strong',
+                score: 22
+              },
+              weak: {
+                ui: 'Too weak'
+              },
+              mostly_weak: {
+                ui: 'Almost there',
+                score: 11
+              }
+            }, 
+            ui: '#pw2', 
+            acceptance: 'medium'
+          }
+        }
+      ]
     }).add_rule('form_7', {
       scenarios: [{name: 'comparator', options: {master: ['#master'], slaves: ['.slave'], fields: ['input[type="email"]'], ui:{element:'#message'}}}]
     }).init();
