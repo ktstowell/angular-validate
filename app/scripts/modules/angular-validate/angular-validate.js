@@ -46,8 +46,6 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
     this.defaults = {
       rule: ngRules.default.rule, // Instance rule
       async: false, // Async mode
-      submit_toggle: 'disabled', // Attribute toggle default
-      required: 'required', // Required toggle
       passed_toggle: 'passed-validation', // Passed toggle default
       failed_toggle: 'failed-validation', // Failed toggle default
       show_failed_elements: true, // Updates the UI to show failed elements
@@ -57,12 +55,16 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       groups: false, // Validation sub-groups
       group_toggle: 'ng-validation-group',
       exempt: [], // Array of items you wish not to be validated
-      custom: false, // Custom code execution
       on_load: function() {}, //  Validation to be executed on page load
-      fail: function() {}, // Error callback
-      success: function() {}, // Success callback
+      ele_fail: function() {}, // Error callback
+      ele_success: function() {}, // Success callback
+      instance_fail: function() {}, // Error callback
+      instance_success: function() {}, // Success callback
+      submit_fail: function() {}, // Error callback
+      submit_success: function() {}, // Success callback
       validator: false, // custom validator blocks
       submit: false, //  default submit to false
+      submit_toggle: 'disabled', // CSS class or Attribute to add to submit button
       scenarios: false, // Validation scenarios
       events: {
         keydown: ['text', 'password', 'email', 'textarea', 'tel'],
@@ -494,6 +496,8 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         if(this.spe) el.classList.add(this.pt);
         // remove a failed class regardless
         el.classList.remove(this.ft);
+        // run element success callback
+        this.opts.ele_success.call(this, el, e);
       }
     }
     // Run the instance rule.
@@ -515,6 +519,8 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
         if(this.sfe) el.classList.add(this.ft);
         // remove passed class regardless
         el.classList.remove(this.pt);
+        // run element fail callback
+        this.opts.ele_fail.call(this, el, e);
       }
     }
     // Run the instance rule.
@@ -539,9 +545,13 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
       if(this.opts.rule.call(this, this.vChunk, el, e)) {
         // Remove the disabled toggle
         this.sbmt.removeAttribute(this.opts.submit_toggle);
+        // Run success callback
+        this.opts.instance_success.call(this, this.vChunk);
       } else {
         // Failed: add the disabled toggle
         this.sbmt.setAttribute(this.opts.submit_toggle, true);
+        // Run fail callback
+        this.opts.instance_fail.call(this, this.vChunk);
       }
     }
   };
@@ -557,17 +567,24 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
   Validation.prototype.post_validate = function(el, e) {
     var self = this;
 
-    // If 'disabled', don't allow submission
-    if(el.hasAttribute(this.opts.submit_toggle)) {
-      // Failure callback
-      this.opts.fail.call(this);
-      // prevent link
-      return false;
-    } else {
-      // Success callback
-      this.opts.success.call(this);
-      // Allow the event trigger
-      return true;
+    // If form values aren't submitted w/o a submit button
+    if(!this.opts.async) {
+      // This block exists in case the user doesn't use a native submit button
+      // for the form and simply attaches a click event to something else.
+      // When an actuall submit button is flagged as disabled, this event will never fire.
+      // If were to be something else, we'd need to prevent default on fail, passthrough on success.
+      // If 'disabled', don't allow submission
+      if(el.hasAttribute(this.opts.submit_toggle)) {
+        // Failure callback
+        this.opts.submit_fail.call(this);
+        // prevent link, capture both just in case.
+        e.preventDefault(); return false;
+      } else {
+        // Success callback
+        this.opts.submit_success.call(this);
+        // Allow the event trigger
+        return true;
+      }
     }
   };
 
@@ -740,6 +757,12 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    * @author         
    */
   var API = {};
+
+  /**
+   * VERSION NUMBER
+   * @type {String}
+   */
+  API.version = '0.3.3';
 
   /**
    * ADD RULE
