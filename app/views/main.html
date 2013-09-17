@@ -1,6 +1,69 @@
-<section id="main" class="large-12 columns">
+<section id="menu" class="large-2 columns">
   <section>
-    <section>
+      <header>
+        <h6><a href="#intro">Intro</a></h6>
+      </header>
+      <ul>
+        <li><a href="#concepts">Concepts</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#instructions">Instructions</a></li>
+      </ul>
+  </section>
+  <section>
+    <header>
+      <h6><a href="#methods">Methods</a></h6>
+    </header>
+    <ul>
+      <li><a href="#rule">rule</a></li>
+      <li><a href="#validator">validator</a></li>
+      <li><a href="#on_load">on_load</a></li>
+      <li><a href="#ele_fail">ele_fail</a></li>
+      <li><a href="#ele_success">ele_success</a></li>
+      <li><a href="#instance_fail">instance_fail</a></li>
+      <li><a href="#instance_success">instance_success</a></li>
+      <li><a href="#submit_fail">submit_fail</a></li>
+      <li><a href="#submit_success">submit_success</a></li>
+    </ul>
+  </section>
+  <section>
+    <header>
+      <h6><a href="#properties">Properties</a></h6>
+    </header>
+    <ul>
+      <li><a href="#exempt">exempt</a></li>
+      <li><a href="#scenarios">scenarios</a></li>
+      <li><a href="#passed_toggle">passed_toggle</a></li>
+      <li><a href="#failed_toggle">failed_toggle</a></li>
+      <li><a href="#show_failed_elements">show_failed_elements</a></li>
+      <li><a href="#show_passed_elements">show_passed_elements</a></li>
+      <li><a href="#show_passed_on_load">show_passed_on_load</a></li>
+      <li><a href="#show_failed_on_load">show_failed_on_load</a></li>
+      <li><a href="#groups">groups</a></li>
+      <li><a href="#group_toggle">group_toggle</a></li>
+      <li><a href="#submit">submit</a></li>
+      <li><a href="#events">events</a></li>
+    </ul>
+  </section>
+  <section>
+    <header>
+      <h6><a href="#demos">Demos</a></h6>
+    </header>
+    <ul>
+      <li><a href="#form-1">Default form</a></li>
+      <li><a href="#form-2">Defaults with email/password</a></li>
+      <li><a href="#form-3">Using Exempts</a></li>
+      <li><a href="#form-4">Groups</a></li>
+      <li><a href="#form-5">Scenarios: Password Strength</a></li>
+      <li><a href="#form-6">Scenarios: Field Comparison</a></li>
+    </ul>
+  </section>
+</section>
+<section id="main" class="large-10 columns">
+  <section id="content" class="large-12 columns">
+    <section id="intro">
+        <header>
+          <h3>Intro</h3>
+        </header>
       <p>
         Angular Validation provides an effective, performant, highly customizable yet with reliable defaults, validation tool for
         your Angular web-app.
@@ -14,7 +77,7 @@
             This module approaches validation via three rule types:
           </p>
           <ul>
-            <li> Element:</li>
+            <li>Element:</li>
             <li>  
               <ul>
                 <li>
@@ -45,7 +108,7 @@
       </section>
     </section>
   </section>
-  <section>
+  <section id="install">
     <header>
       <h3>Installation</h2>
       <hr />
@@ -78,10 +141,12 @@
         <li>Once you've added the name, open up the controller where you called <pre><code>ngValidation.init()</code></pre> and add your rules as follows: <pre><code>ngValidation.add_rule('myForm', {options}).init();</code></pre> make sure the name of the rule is the same name you gave your form in the markup. And of course, dont forget to call <pre><code>.init();</code></pre>When you're done adding all the rules you'll need.</li>
         <li>You can now give your form custom options:</li>
       </ol>
-      <h6>Available options:</h6>
+      <h3>Available options:</h3>
+      <hr />
+      <h6 id="methods">Methods</h6>
       <ul>
         <li>
-          <ul class="panel">
+          <ul class="panel" id="rule">
             <li>Name: rule</li>
             <li>Type: function</li>
             <li>
@@ -108,7 +173,219 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel">
+          <ul class="panel" id="validator">
+            <li>Name: validator</li>
+            <li>Type: function/mixed</li>
+            <li>Default: false</li>
+            <li>Description: Entry point for custom validation code that can effect validation success. This method *<span><h6>MUST</h6></span>* return a true/false value. This method *<span><h6>MUST</h6></span>* contain an object or function that correlates to the element's type. Please see the example below.</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>el: the DOM active validation element</li>
+                <li>e: the active validation event object</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  validator: {
+    radio: function(el, e) {
+      if(el.checked) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="on_load">
+            <li>Name: on_load</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for user-provided custom code execution that happens on page load</li>
+            <li>Scope (this): the root Validation class.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  on_load: function() {
+    console.log(this);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="ele_fail">
+            <li>Name: ele_fail</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for custom code on an ELEMENT validation failure</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>el: the DOM active validation element</li>
+                <li>e: the active validation event object</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  ele_fail: function(el, e) {
+    console.log(el, e);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="ele_success">
+            <li>Name: ele_success</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for custom code on an ELEMENT validation success</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>el: the DOM active validation element</li>
+                <li>e: the active validation event object</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  ele_success: function(el, e) {
+    console.log(el, e);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="instance_fail">
+            <li>Name: instance_fail</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for custom code on INSTANCE validation failure</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>sel: the base DOM object for this form instance.</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  instance_fail: function(sel) {
+    console.log(el);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="instance_success">
+            <li>Name: instance_success</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for custom code on INSTANCE validation success</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>sel: the base DOM object for this form instance.</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  instance_success: function(sel) {
+    console.log(sel);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="submit_fail">
+            <li>Name: submit_fail</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for custom code on submit validation failure</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>sel: the base DOM object for this form instance.</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  submit_fail: function(sel) {
+    console.log(el);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="submit_success">
+            <li>Name: submit_success</li>
+            <li>Type: function</li>
+            <li>Default: noop</li>
+            <li>Description: Entry point for custom code on submit validation success</li>
+            <li>Scope (this): ngValidation Class</li>
+            <li>
+              Available arguments (in order):
+              <ul>
+                <li>sel: the base DOM object for this form instance.</li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  submit_success: function(sel) {
+    console.log(sel);
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <h6 id="properties">Properties:</h6>
+          <ul class="panel" id="exempt">
             <li>Name: exempt</li>
             <li>Type: array</li>
             <li>Description: An array containing an indefinite number of indexes of strings that correlate to elements you wish to avoid validation processing. It uses a jQuery like selector syntax, just without the $().</li>
@@ -125,24 +402,7 @@ myForm: {
 </pre>
             </li>
           </ul>
-         <!--  <ul class="panel">
-            <li>Name: submit</li>
-            <li>Type: string</li>
-            <li>Description: Specify a custom submit clicky.</li>
-            <li>Example:</li>
-            <hr />
-            <li>
-<pre>
-<code>
-myForm: {
-  // This will allow an element with the ID of 'mySpecialSubmit' to act as a submit button.
-  submit: ['#mySpecialSubmit']
-}
-</code>
-</pre>
-            </li>
-          </ul> -->
-          <ul class="panel">
+          <ul class="panel" id="scenarios">
             <li>Name: scenarios</li>
             <li>Type: array of objects</li>
             <li>Description: An array containing the desired validation scenarios to use.</li>
@@ -159,15 +419,237 @@ myForm: {
 </pre>
             </li>
           </ul>
+          <ul class="panel" id="passed_toggle">
+            <li>Name: passed_toggle</li>
+            <li>Type: string</li>
+            <li>Default: 'passed-validation'</li>
+            <li>Description: CSS class name used to denote a passed element.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  passed_toggle: 'my-passed-class'
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="failed_toggle">
+            <li>Name: failed_toggle</li>
+            <li>Type: string</li>
+            <li>Default: 'failed-validation'</li>
+            <li>Description: CSS class name used to denote a failed element.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  failed_toggle: 'my-failed-element'
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="show_failed_elements">
+            <li>Name: show_failed_elements</li>
+            <li>Type: boolean</li>
+            <li>Default: true</li>
+            <li>Description: Flag that determines whether or not to update the UI with the fail toggles.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  show_failed_elements: true
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="show_passed_elements">
+            <li>Name: show_passed_elements</li>
+            <li>Type: boolean</li>
+            <li>Default: true</li>
+            <li>Description: Flag that determines whether or not to update the UI with the pass toggles.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  show_passed_elements: true
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="show_passed_on_load">
+            <li>Name: show_passed_on_load</li>
+            <li>Type: boolean</li>
+            <li>Default: false</li>
+            <li>Description: Flag that determines whether or not to update the UI with the pass toggles on page load.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  show_passed_on_load: true
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="show_failed_on_load">
+            <li>Name: show_failed_on_load</li>
+            <li>Type: boolean</li>
+            <li>Default: false</li>
+            <li>Description: Flag that determines whether or not to update the UI with the fail toggles on page load.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  show_failed_on_load: true
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="groups">
+            <li>Name: groups</li>
+            <li>Type: mixed</li>
+            <li>Default: false</li>
+            <li>Description: Object that specifies which elements to treat as part of a group.</li>
+            <li>
+            Options:
+            <ul>
+              <li>name: name of the group (can be anything you want)</li>
+              <li>container: DOM element that holds the group elements as children. (optional)</li>
+              <li>required: Elements within the group that are required by the user</li>
+              <li>number_required: number of elements in the group that when considered passing will also pass the group validation.</li>
+            </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  groups: [{name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}]
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="group_toggle">
+            <li>Name: group_toggle</li>
+            <li>Type: string</li>
+            <li>Default: 'ng-validation-group</li>
+            <li>Description: CSS class name that gets added to the group container if scpecified</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  show_passed_elements: true
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <ul class="panel" id="submit">
+            <li>Name: submit</li>
+            <li>Type: string/mixed</li>
+            <li>Default: false</li>
+            <li>Description: String used as query selector for DOM node to be used as submit button. If left as default the class will try to find a submit button of either input type="submit" or button type="submit". If none are found the validatio instance will fail early with an exception.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  submit: '#my-submit-button'
+}
+</code>
+</pre>
+            </li>
+          </ul>
+          <!-- <ul class="panel">
+            <li>Name: submit_toggle</li>
+            <li>Type: string</li>
+            <li>Default: 'disabled'</li>
+            <li>Description: Attribute or value of CSS class to attach to submit button on instance failure.</li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  submit_toggle: 'bad-form'
+}
+</code>
+</pre>
+            </li>
+          </ul> -->
+          <ul class="panel" id="events">
+            <li>Name: events</li>
+            <li>Type: Object of arrays</li>
+            <li>Description: Object to serve as a mapper for event types => element types.</li>
+            <li>
+              Default schema:
+              <ul>
+                <li>
+                <pre>
+                  <code>
+                    events: {
+                      keydown: ['text', 'password', 'email', 'textarea', 'tel'],
+                      keyup: ['text', 'password', 'email', 'textarea', 'tel'],
+                      click: ['submit', 'checkbox', 'radio'],
+                      change: ['checkbox', 'radio', 'select'],
+                      paste: ['text', 'password', 'email', 'textarea', 'tel'],
+                      blur: ['text', 'password', 'email', 'textarea', 'tel'],
+                    }
+                  </code>
+                </pre>
+                </li>
+              </ul>
+            </li>
+            <li>Example:</li>
+            <hr />
+            <li>
+<pre>
+<code>
+myForm: {
+  events: {
+    // These are overridable just as any other option. *HOWEVER* they do carry one small caveat:
+    // If you change an event mapping, to include or remove an element type, you must still include
+    // the defaults as members of the array. For example, the defaults include textareas to validate
+    // on a paste event. If I did not want this behavior I can totally remove it from the mapping, I just
+    // have to include the others like so:
+    paste: ['text', 'password', 'email', 'tel']
+    // *REMEMBER* this applies to *ADDING* an element type as well.
+  }
+}
+</code>
+</pre>
+            </li>
+          </ul>
         </li>
       </ul>
     </section>
-    <section>
+    <section id="demos">
       <header>
         <h3>Demos:</h3>
         <hr />
       </header>
-      <form ng-validation="form_1" class="large-6 columns">
+      <form id="form-1" ng-validation="form_1" class="large-6 columns">
         <header>
           <h4>Form Example 1 - Default</h4>
         </header>
@@ -188,7 +670,7 @@ myForm: {
         <clearfix></clearfix>
       </section>
       <section>
-        <form ng-validation="form_2" class="large-6 columns">
+        <form id="form-2" ng-validation="form_2" class="large-6 columns">
           <header>
             <h4>Form Example 2 - Defaults: email, phone, textarea</h4>
           </header>
@@ -210,7 +692,7 @@ myForm: {
         <clearfix></clearfix>
       </section>
       <section>
-        <form ng-validation="form_3" class="large-6 columns">
+        <form id="form-3" ng-validation="form_3" class="large-6 columns">
           <header>
             <h4>Form Example 3 - Custom Exempts</h4>
           </header>
@@ -238,7 +720,7 @@ ngValidation.add_rule('form_3', {
         <clearfix></clearfix>
       </section>
       <section>
-        <form ng-validation="form_4" class="large-6 columns">
+        <form id="form-4" ng-validation="form_4" class="large-6 columns">
           <header>
             <h4>Form Example 4 - Varied Element Types</h4>
           </header>
@@ -280,7 +762,7 @@ ngValidation.add_rule('form_4', {
         <clearfix></clearfix>
       </section>
       <section class="scenarios">
-        <form ng-validation="form_5" class="large-6 columns">
+        <form id="form-5" ng-validation="form_5" class="large-6 columns">
           <header>
             <h4>Form Example 5 - Scenarios:Password Strength</h4>
           </header>
@@ -292,7 +774,7 @@ ngValidation.add_rule('form_4', {
               <p>Password strength is deteremined by a scoring system. The score is calculated by the following point values:</p>
               <ul>
                 <li>Length: 1 point. Every character contributes to the total length of the password.</li>
-                <li>Uppercase: 4 points.</li>
+                <li>Uppercase: 3 points.</li>
                 <li>Number: 4 points.</li>
                 <li>Special: 6 points. Characters such as '@!+=&amp;*^</li>
               </ul>
@@ -386,7 +868,7 @@ ngValidation.add_rule('form_5', {
         <clearfix></clearfix>
       </section>
       <section>
-        <form ng-validation="form_7" class="large-6 columns">
+        <form id="form-6" ng-validation="form_7" class="large-6 columns">
           <header>
             <h4>Form Example 6 - Scenarios: Comparison</h4>
           </header>
@@ -412,5 +894,7 @@ ngValidation.add_rule('form_5', {
         </section>
         <clearfix></clearfix>
       </section>
+      <clearfix></clearfix>
     </section>
+    <clearfix></clearfix>
   </section>

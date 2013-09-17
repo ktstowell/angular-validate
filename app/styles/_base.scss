@@ -1,5 +1,10 @@
 body {
 	background-image: url(http://i1289.photobucket.com/albums/b512/ktstowell/weave_bg_zpse0425bce.png);
+	>header {
+		hr {
+			margin-bottom: 1px;
+		}
+	}
 }
 
 .clearfix {
