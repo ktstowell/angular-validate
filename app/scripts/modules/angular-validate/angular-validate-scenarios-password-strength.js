@@ -83,6 +83,7 @@
           special: 0,
           length: 0
         };
+
     // Set the score to 0 in every callback - it's easier than tracking state
     this.score = 0;
     // Number of uppercase characters
@@ -104,7 +105,7 @@
     if(this.strength_ui) {
       // Because the standards themselves are muteable, we need to account for an indefinite number
       // of standards in an unenforceable order.
-      // The first task is to get the scores:
+      // The first task is to get the scores, and sort them ascending:
       this.scores = Object.keys(this.opts.standards).map(function(key) {
         return self.opts.standards[key].score;
       }).sort(function(a, b) {
