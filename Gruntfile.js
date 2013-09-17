@@ -90,12 +90,6 @@ module.exports = function (grunt) {
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
     },
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
     compass: {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
@@ -287,20 +281,11 @@ module.exports = function (grunt) {
     'clean:server',
     'livereload-start',
     'connect:livereload',
-    // 'open',
     'watch'
-  ]);
-
-  grunt.registerTask('test', [
-    'clean:server',
-    'compass',
-    'connect:test',
-    'karma'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
-    // 'jshint',
     'compass:dist',
     'useminPrepare',
     'imagemin',
