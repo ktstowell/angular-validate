@@ -10,5 +10,4 @@ angular.module('ngValidateApp', ['ng-validation'])
       .otherwise({
         redirectTo: '/'
       });
-      // $locationProvider.html5Mode(true).hashPrefix('!');
   });

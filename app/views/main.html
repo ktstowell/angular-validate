@@ -1,60 +1,60 @@
 <section id="menu" class="large-2 columns">
   <section>
       <header>
-        <h6><a href="#intro">Intro</a></h6>
+        <h6><a href="/#/#intro">Intro</a></h6>
       </header>
       <ul>
-        <li><a href="#concepts">Concepts</a></li>
-        <li><a href="#install">Installation</a></li>
-        <li><a href="#instructions">Instructions</a></li>
+        <li><a href="/#/#concepts">Concepts</a></li>
+        <li><a href="/#/#install">Installation</a></li>
+        <li><a href="/#/#instructions">Instructions</a></li>
       </ul>
   </section>
   <section>
     <header>
-      <h6><a href="#methods">Methods</a></h6>
+      <h6><a href="/#/#methods">Methods</a></h6>
     </header>
     <ul>
-      <li><a href="#rule">rule</a></li>
-      <li><a href="#validator">validator</a></li>
-      <li><a href="#on_load">on_load</a></li>
-      <li><a href="#ele_fail">ele_fail</a></li>
-      <li><a href="#ele_success">ele_success</a></li>
-      <li><a href="#instance_fail">instance_fail</a></li>
-      <li><a href="#instance_success">instance_success</a></li>
-      <li><a href="#submit_fail">submit_fail</a></li>
-      <li><a href="#submit_success">submit_success</a></li>
+      <li><a href="/#/#rule">rule</a></li>
+      <li><a href="/#/#validator">validator</a></li>
+      <li><a href="/#/#on_load">on_load</a></li>
+      <li><a href="/#/#ele_fail">ele_fail</a></li>
+      <li><a href="/#/#ele_success">ele_success</a></li>
+      <li><a href="/#/#instance_fail">instance_fail</a></li>
+      <li><a href="/#/#instance_success">instance_success</a></li>
+      <li><a href="/#/#submit_fail">submit_fail</a></li>
+      <li><a href="/#/#submit_success">submit_success</a></li>
     </ul>
   </section>
   <section>
     <header>
-      <h6><a href="#properties">Properties</a></h6>
+      <h6><a href="/#/#properties">Properties</a></h6>
     </header>
     <ul>
-      <li><a href="#exempt">exempt</a></li>
-      <li><a href="#scenarios">scenarios</a></li>
-      <li><a href="#passed_toggle">passed_toggle</a></li>
-      <li><a href="#failed_toggle">failed_toggle</a></li>
-      <li><a href="#show_failed_elements">show_failed_elements</a></li>
-      <li><a href="#show_passed_elements">show_passed_elements</a></li>
-      <li><a href="#show_passed_on_load">show_passed_on_load</a></li>
-      <li><a href="#show_failed_on_load">show_failed_on_load</a></li>
-      <li><a href="#groups">groups</a></li>
-      <li><a href="#group_toggle">group_toggle</a></li>
-      <li><a href="#submit">submit</a></li>
-      <li><a href="#events">events</a></li>
+      <li><a href="/#/#exempt">exempt</a></li>
+      <li><a href="/#/#scenarios">scenarios</a></li>
+      <li><a href="/#/#passed_toggle">passed_toggle</a></li>
+      <li><a href="/#/#failed_toggle">failed_toggle</a></li>
+      <li><a href="/#/#show_failed_elements">show_failed_elements</a></li>
+      <li><a href="/#/#show_passed_elements">show_passed_elements</a></li>
+      <li><a href="/#/#show_passed_on_load">show_passed_on_load</a></li>
+      <li><a href="/#/#show_failed_on_load">show_failed_on_load</a></li>
+      <li><a href="/#/#groups">groups</a></li>
+      <li><a href="/#/#group_toggle">group_toggle</a></li>
+      <li><a href="/#/#submit">submit</a></li>
+      <li><a href="/#/#events">events</a></li>
     </ul>
   </section>
   <section>
     <header>
-      <h6><a href="#demos">Demos</a></h6>
+      <h6><a href="/#/#demos">Demos</a></h6>
     </header>
     <ul>
-      <li><a href="#form-1">Default form</a></li>
-      <li><a href="#form-2">Defaults with email/password</a></li>
-      <li><a href="#form-3">Using Exempts</a></li>
-      <li><a href="#form-4">Groups</a></li>
-      <li><a href="#form-5">Scenarios: Password Strength</a></li>
-      <li><a href="#form-6">Scenarios: Field Comparison</a></li>
+      <li><a href="/#/#form-1">Default form</a></li>
+      <li><a href="/#/#form-2">Defaults with email/password</a></li>
+      <li><a href="/#/#form-3">Using Exempts</a></li>
+      <li><a href="/#/#form-4">Groups</a></li>
+      <li><a href="/#/#form-5">Scenarios: Password Strength</a></li>
+      <li><a href="/#/#form-6">Scenarios: Field Comparison</a></li>
     </ul>
   </section>
 </section>
@@ -541,7 +541,7 @@ myForm: {
 <pre>
 <code>
 myForm: {
-  groups: [{name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}]
+  groups: [{name: 'checkboxes', container: '/#/#checkboxes', required: 'input[type="checkbox"]', number_required: 1}]
 }
 </code>
 </pre>
@@ -575,7 +575,7 @@ myForm: {
 <pre>
 <code>
 myForm: {
-  submit: '#my-submit-button'
+  submit: '/#/#my-submit-button'
 }
 </code>
 </pre>
@@ -712,7 +712,7 @@ myForm: {
 // In the ngValidation injected controller:
 ngValidation.add_rule('form_3', {
   // example using class name and id's
-  exempt: ['.exempt', '#exempt']
+  exempt: ['.exempt', '/#/#exempt']
 }).init();
             </code>
             </pre>
@@ -753,7 +753,7 @@ ngValidation.add_rule('form_3', {
 ngValidation.add_rule('form_4', {
   groups: [
     {name: 'radios', container: false, required: 'input[name="group1"]', number_required: 1},
-    {name: 'checkboxes', container: '#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
+    {name: 'checkboxes', container: '/#/#checkboxes', required: 'input[type="checkbox"]', number_required: 1}
   ]
 }).init();
             </code>
@@ -810,7 +810,7 @@ ngValidation.add_rule('form_5', {
             ui: 'I find your lack of faith disturbing'
           }
         }, 
-        ui: '#pw1', 
+        ui: '/#/#pw1', 
         acceptance: 'strong'
       }
     }
@@ -856,7 +856,7 @@ ngValidation.add_rule('form_5', {
             score: 11
           }
         }, 
-        ui: '#pw2', 
+        ui: '/#/#pw2', 
         acceptance: 'medium'
       }
     }
