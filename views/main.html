@@ -57,20 +57,33 @@
       <li><a href="#/#form-6">Scenarios: Field Comparison</a></li>
     </ul>
   </section>
+  <section>
+      <header>
+        <h6><a href="#/#misc">Misc</a></h6>
+      </header>
+      <ul>
+        <li><a href="#/#performance">Performance</a></li>
+        <li><a href="#/#release-history">Release History</a></li>
+        <li><a href="#/#future">The Future!</a></li>
+      </ul>
+  </section>
 </section>
 <section id="main" class="large-10 columns">
   <section id="content" class="large-12 columns">
-    <section id="intro">
+    <section>
         <header>
           <h3>Intro</h3>
+          <hr>
+          <a class="anchor" id="intro"></a>
         </header>
       <p>
         Angular Validation provides an effective, performant, highly customizable yet with reliable defaults, validation tool for
         your Angular web-app.
       </p>
-      <section id="concepts">
+      <section>
         <header>
           <h6>Concepts:</h6>
+          <a class="anchor" id="concepts"></a>
         </header>
         <section>
           <p>
@@ -108,11 +121,12 @@
       </section>
     </section>
   </section>
-  <section id="install">
+  <section>
     <header>
-      <h3>Installation
+      <h3>Installation</h3>
+      <a class="anchor" id="installation"></a>
       <hr>
-    </h3></header>
+    </header>
     <section>
       <h6>Method One:</h6>
       <p>Clone this repo and copy/paste the files in /build to the directory of your choice in your app. Then reference them in your index.html</p>
@@ -121,9 +135,10 @@
       <p>Of course you still need to reference the files in your index.html</p>
     </section>
   </section>
-  <section id="instructions">
+  <section>
     <header>
       <h3>How to Use:</h3>
+      <a class="anchor" id="instructions"></a>
       <hr>
     </header>
     <section>
@@ -143,10 +158,12 @@
       </ol>
       <h3>Available options:</h3>
       <hr>
-      <h6 id="methods">Methods</h6>
+      <h6>Methods</h6>
+      <a class="anchor" id="methods"></a>
       <ul>
         <li>
-          <ul class="panel" id="rule">
+          <ul class="panel">
+          <a class="anchor" id="rule"></a>
             <li>Name: rule</li>
             <li>Type: function</li>
             <li>
@@ -173,7 +190,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="validator">
+          <ul class="panel">
+            <a class="anchor" id="validator"></a>
             <li>Name: validator</li>
             <li>Type: function/mixed</li>
             <li>Default: false</li>
@@ -206,7 +224,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="on_load">
+          <ul class="panel">
+            <a class="anchor" id="on_load"></a>
             <li>Name: on_load</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -226,7 +245,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="ele_fail">
+          <ul class="panel">
+            <a class="anchor" id="ele_fail"></a>
             <li>Name: ele_fail</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -253,7 +273,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="ele_success">
+          <ul class="panel">
+            <a class="anchor" id="ele_success"></a>
             <li>Name: ele_success</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -280,7 +301,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="instance_fail">
+          <ul class="panel">
+            <a class="anchor" id="instance_fail"></a>
             <li>Name: instance_fail</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -306,7 +328,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="instance_success">
+          <ul class="panel">
+            <a class="anchor" id="instance_success"></a>
             <li>Name: instance_success</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -332,7 +355,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="submit_fail">
+          <ul class="panel">
+            <a class="anchor" id="submit_fail"></a>
             <li>Name: submit_fail</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -358,7 +382,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="submit_success">
+          <ul class="panel">
+            <a class="anchor" id="submit_success"></a>
             <li>Name: submit_success</li>
             <li>Type: function</li>
             <li>Default: noop</li>
@@ -384,8 +409,10 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <h6 id="properties">Properties:</h6>
-          <ul class="panel" id="exempt">
+          <h6>Properties:</h6>
+          <a class="anchor" id="properties"></a>
+          <ul class="panel">
+            <a class="anchor" id="exempt"></a>
             <li>Name: exempt</li>
             <li>Type: array</li>
             <li>Description: An array containing an indefinite number of indexes of strings that correlate to elements you wish to avoid validation processing. It uses a jQuery like selector syntax, just without the $().</li>
@@ -402,7 +429,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="scenarios">
+          <ul class="panel">
+            <a class="anchor" id="scenarios"></a>
             <li>Name: scenarios</li>
             <li>Type: array of objects</li>
             <li>Description: An array containing the desired validation scenarios to use.</li>
@@ -419,7 +447,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="passed_toggle">
+          <ul class="panel">
+            <a class="anchor" id="passed_toggle"></a>
             <li>Name: passed_toggle</li>
             <li>Type: string</li>
             <li>Default: 'passed-validation'</li>
@@ -436,7 +465,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="failed_toggle">
+          <ul class="panel">
+            <a class="anchor" id="failed_toggle"></a>
             <li>Name: failed_toggle</li>
             <li>Type: string</li>
             <li>Default: 'failed-validation'</li>
@@ -453,7 +483,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="show_failed_elements">
+          <ul class="panel">
+            <a class="anchor" id="show_failed_elements"></a>
             <li>Name: show_failed_elements</li>
             <li>Type: boolean</li>
             <li>Default: true</li>
@@ -470,7 +501,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="show_passed_elements">
+          <ul class="panel">
+            <a class="anchor" id="show_passed_elements"></a>
             <li>Name: show_passed_elements</li>
             <li>Type: boolean</li>
             <li>Default: true</li>
@@ -487,7 +519,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="show_passed_on_load">
+          <ul class="panel">
+            <a class="anchor" id="show_passed_on_load"></a>
             <li>Name: show_passed_on_load</li>
             <li>Type: boolean</li>
             <li>Default: false</li>
@@ -504,7 +537,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="show_failed_on_load">
+          <ul class="panel">
+            <a class="anchor" id="show_failed_on_load"></a>
             <li>Name: show_failed_on_load</li>
             <li>Type: boolean</li>
             <li>Default: false</li>
@@ -521,7 +555,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="groups">
+          <ul class="panel">
+            <a class="anchor" id="groups"></a>
             <li>Name: groups</li>
             <li>Type: mixed</li>
             <li>Default: false</li>
@@ -547,7 +582,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="group_toggle">
+          <ul class="panel">
+            <a class="anchor" id="group_toggle"></a>
             <li>Name: group_toggle</li>
             <li>Type: string</li>
             <li>Default: 'ng-validation-group</li>
@@ -564,7 +600,8 @@ myForm: {
 </pre>
             </li>
           </ul>
-          <ul class="panel" id="submit">
+          <ul class="panel">
+            <a class="anchor" id="submit"></a>
             <li>Name: submit</li>
             <li>Type: string/mixed</li>
             <li>Default: false</li>
@@ -598,7 +635,8 @@ myForm: {
 </pre>
             </li>
           </ul> -->
-          <ul class="panel" id="events">
+          <ul class="panel">
+            <a class="anchor" id="events"></a>
             <li>Name: events</li>
             <li>Type: Object of arrays</li>
             <li>Description: Object to serve as a mapper for event types => element types.</li>
@@ -644,12 +682,14 @@ myForm: {
         </li>
       </ul>
     </section>
-    <section id="demos">
+    <section>
       <header>
         <h3>Demos:</h3>
+        <a class="anchor" id="demos"></a>
         <hr>
       </header>
-      <form id="form-1" ng-validation="form_1" class="large-6 columns">
+      <a class="anchor" id="form-1"></a>
+      <form ng-validation="form_1" class="large-6 columns">
         <header>
           <h4>Form Example 1 - Default</h4>
         </header>
@@ -670,7 +710,8 @@ myForm: {
         <clearfix></clearfix>
       </section>
       <section>
-        <form id="form-2" ng-validation="form_2" class="large-6 columns">
+        <a class="anchor" id="form-2"></a>
+        <form ng-validation="form_2" class="large-6 columns">
           <header>
             <h4>Form Example 2 - Defaults: email, phone, textarea</h4>
           </header>
@@ -692,7 +733,8 @@ myForm: {
         <clearfix></clearfix>
       </section>
       <section>
-        <form id="form-3" ng-validation="form_3" class="large-6 columns">
+        <a class="anchor" id="form-3"></a>
+        <form ng-validation="form_3" class="large-6 columns">
           <header>
             <h4>Form Example 3 - Custom Exempts</h4>
           </header>
@@ -720,7 +762,8 @@ ngValidation.add_rule('form_3', {
         <clearfix></clearfix>
       </section>
       <section>
-        <form id="form-4" ng-validation="form_4" class="large-6 columns">
+        <a class="anchor" id="form-4"></a>
+        <form ng-validation="form_4" class="large-6 columns">
           <header>
             <h4>Form Example 4 - Varied Element Types</h4>
           </header>
@@ -762,7 +805,8 @@ ngValidation.add_rule('form_4', {
         <clearfix></clearfix>
       </section>
       <section class="scenarios">
-        <form id="form-5" ng-validation="form_5" class="large-6 columns">
+        <a class="anchor" id="form-5"></a>
+        <form ng-validation="form_5" class="large-6 columns">
           <header>
             <h4>Form Example 5 - Scenarios:Password Strength</h4>
           </header>
@@ -868,7 +912,8 @@ ngValidation.add_rule('form_5', {
         <clearfix></clearfix>
       </section>
       <section>
-        <form id="form-6" ng-validation="form_7" class="large-6 columns">
+        <a class="anchor" id="form-6"></a>
+        <form ng-validation="form_7" class="large-6 columns">
           <header>
             <h4>Form Example 6 - Scenarios: Comparison</h4>
           </header>
@@ -896,5 +941,82 @@ ngValidation.add_rule('form_5', {
       </section>
       <clearfix></clearfix>
     </section>
+    <section>
+      <header>
+        <h3>Miscellaneous.</h3>
+        <a class="anchor" id="misc"></a>
+        <hr>
+      </header>
+      <section>
+        <header>
+          <h6>Performance:</h6>
+          <a class="anchor" id="performance"></a>
+        </header>
+        <section>
+          <p>
+            Angular validate toutes being extremely DOM and user friendly in terms of implementation and experience.
+          </p>
+          <p>You may notice on this page, however, that when deleting characters from a password field, the browser seems to hang or "lag" when deleting the last character in that field for close to a second.</p>
+          <p>While this performance hitch was difficult to track down, we can assure you that it is NOT angular-validate's fault. In fact, it is an old Chrome related defect that occurs when many elements are on a page; specifically elements that precede a password element:</p>
+          <p>Read more about this bug <a href="https://code.google.com/p/chromium/issues/detail?id=121918" target="_blank">here</a>.
+        </p></section>
+      </section>
+    </section>
+    <section>
+        <header>
+          <h6>Release History:</h6>
+          <a class="anchor" id="release-history"></a>
+        </header>
+        <section>
+          <header>
+            <h6>0.3.3</h6>
+          </header>
+          <section>
+            <p>New Features:</p>
+            <ul>
+              <li>
+                Callback Entry Points have been added to the following events:
+              </li>
+              <li>
+                <ul>
+                  <li>Element Fail</li>
+                  <li>Element Success</li>
+                  <li>Instance Fail</li>
+                  <li>Instance Success</li>
+                  <li>Submit Fail</li>
+                  <li>Submit Success</li>
+                </ul>
+              </li>
+            </ul>
+            <p>Patches:</p>
+            <ul>
+              <li>
+                Password strength scenario uses a better, more accurate algorithm that also can
+   accommodate an indefinite number of standards in any order.
+              </li>
+              <li>Added version number to API layer in library.</li>
+            </ul>
+            
+          </section>
+        </section>
+        <section>
+          <header>
+            <h6>The Future!</h6>
+            <a class="anchor" id="future"></a>
+          </header>
+          <section>
+            <p>Version one hopes to 'angularize' more of the solutions to the problems that form validation presents:</p>
+            <ul>
+              <li>A more declarative approach to instantiation and options.</li>
+              <li>Using angular directives and model binding to handle events.</li>
+              <li>Exposing values to $scope to offer more control and reveal more possibilities.</li>
+              <li>An XHR mode that doesn't rely on a submit button but rather a 'sync status' type of indicator.</li>
+              <li>Use of promises instead of callbacks, particularaly in XHR mode.</li>
+            </ul>
+            <p>And many more!</p>
+          </section>
+        </section>
+      </section>
+    </section>
     <clearfix></clearfix>
-  </section>
+  
