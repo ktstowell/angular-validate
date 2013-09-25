@@ -18,11 +18,12 @@
 	overflow: auto;
 	padding-left: 1.4em;
 	position: relative;
-	top:108px;
+	margin-top:108px;
 	left:194px;
 }
 
 #menu {
+	width:194px;
 	position: fixed;
 	top:108px;
 	text-align: left;
@@ -30,8 +31,8 @@
 	margin-left:0;
 	margin-top: 1em;
 	margin-bottom:2em;
-	height:500px;
-	overflow: auto;
+	height:100%;
+	// overflow: auto;
 	a, a:visited {
 		color: #000;
 	}
@@ -43,6 +44,10 @@
 		li {
 			font-size: .8em;
 		}
+	}
+	>section {
+		height:80%;
+		overflow: scroll;
 	}
 }
 
