@@ -762,7 +762,7 @@ angular.module('ng-validation', []).factory('ngValidation', ['ngValidationRules'
    * VERSION NUMBER
    * @type {String}
    */
-  API.version = '0.3.3';
+  API.version = '0.3.4';
 
   /**
    * ADD RULE
