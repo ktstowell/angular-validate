@@ -11,7 +11,7 @@
  * you will actually need to do.
  *
  *
- * @dependencies ngValidationRules  Without user modification, this compnent includes the default instance rule
+ * @dependencies ngValidationRules  Without user modification, this component includes the default instance rule
  *                                  that determines the final pass/fail state of the form.
  *
  * @author  @ktstowell
