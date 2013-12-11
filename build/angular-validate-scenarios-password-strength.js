@@ -138,31 +138,42 @@
    * @description This function does quite a bit of work. It compares a numerically sorted by ascending
    *              array to determine what standard UI it can show.
    */
-  PasswordStrength.prototype.show_strength_ui = function(scores) {
+  PasswordStrength.prototype.show_strength_ui = function(scores, val) {
     var self = this, // scope
-        mid_scores = [], // Array to hold middle values
-        mids_max = Math.max.apply(null, scores), // Highest score in scores
-        mids_min = Math.min.apply(null, scores); // Lowest score in scores
+        standards = [];
         
-    // Begin by looping through the standards
+    // Begin by looping through the standards, push them into an array to make comparing sibling values much easier
     for(var standard in this.opts.standards) {
-      // If the score is the lowest one
-      if(this.score <= this.opts.standards[standard].score && this.opts.standards[standard].score <= mids_min) {
-        // Update the UI
-        this.strength_ui.textContent = this.opts.standards[standard].ui;
-      } else {
-        // This conditional captures every score that isn't min or max.
-        if(this.score > mids_min && this.score < mids_max && this.opts.standards[standard].score > mids_min && this.opts.standards[standard].score < mids_max) {
-          // Push to the temp array which is used as the recursive set of params.
-          mid_scores.push(this.opts.standards[standard].score);
-          // Recurse
-          this.show_strength_ui(mid_scores);
-        } else {
-          // If it's the highest score
-          if(this.score >= this.opts.standards[standard].score && this.opts.standards[standard].score >= mids_max) {
-            // Update the UI
-            this.strength_ui.textContent = this.opts.standards[standard].ui;
+      standards.push(this.opts.standards[standard]);
+    }
+
+    // Sort the array from lowest to highest
+    standards.sort(function(a, b) {
+      if (a.score < b.score)
+       return -1;
+      if (a.score > b.score)
+        return 1;
+      return 0;
+    });
+
+    
+    // update UI based on scores and length
+    for(var i=0; i<standards.length; i++) {
+      // This will capture the lowest value
+      if(standards[i].score == 0 && this.score == 0 || standards[i].length == 0 && val.length == 0 || this.score < standards[i].score && val.length < standards[i].length) {
+        if(!standards[i-1]) {
+          this.strength_ui.textContent = standards[i].ui;
+        }
+      }
+
+      // this will capture the middle and greatest
+      if(this.score >= standards[i].score && val.length >= standards[i].length) {
+        if(standards[i+1] !== undefined) {
+          if(this.score < standards[i+1].score && val.length < standards[i+1].length || this.score >= standards[i+1].score && val.length < standards[i+1].length) {
+            this.strength_ui.textContent = standards[i].ui;  
           }
+        } else {
+          this.strength_ui.textContent = standards[i].ui;
         }
       }
     }
