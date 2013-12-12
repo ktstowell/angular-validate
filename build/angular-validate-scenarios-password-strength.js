@@ -113,7 +113,7 @@
       });
       
       // Then we call our recursive updater
-      this.show_strength_ui(this.scores);
+      this.show_strength_ui(this.scores, val);
     }
 
     // If the score meets the acceptance
