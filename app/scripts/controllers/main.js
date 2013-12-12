@@ -26,10 +26,12 @@ angular.module('ngValidateApp')
           options: {
             standards: {
               strong: {
-                ui: 'The Force is strong with this one'
+                ui: 'The Force is strong with this one',
+                length: 15,
+                score: 35
               },
               medium: {
-                ui: 'Do or do not, there is no try'
+                ui: 'Do or do not, there is no try',
               },
               weak: {
                 ui: 'I find your lack of faith disturbing'
@@ -47,20 +49,27 @@ angular.module('ngValidateApp')
           options: {
             standards: {
               strong: {
-                ui: "Strong"
+                ui: "Strong",
+                length: 13,
+                score: 24
               },
               medium: {
-                ui: 'Acceptable'
+                ui: 'Acceptable',
+                length: 8,
+                score: 18
               },
               mostly_strong: {
                 ui: 'Almost strong',
+                length: 10,
                 score: 22
               },
               weak: {
-                ui: 'Too weak'
+                ui: 'Too weak',
+                score: 0
               },
               mostly_weak: {
                 ui: 'Almost there',
+                length: 5,
                 score: 11
               }
             }, 
